@@ -7,7 +7,7 @@
 ## Table of Contents
 
 - [Quick Start](#quick-start)
-- [Tech Stack](#tech-stack)
+- [Tech Stack](#-tech-stack)
 - [Features](#features)
   - [Vocabulary](#vocabulary)
   - [Reading Lessons](#reading-lessons)
