@@ -9,10 +9,11 @@ import ReadingFilter from "../components/ReadingFilter";
 import ReadingSearch from "../components/ReadingSearch";
 import ReadingSort from "../components/ReadingSort";
 import ReadingList from "../components/ReadingList";
+import Banner from "../components/Banner";
 
 
 function HomePage() {
-  const [stories, setStories] = useState([]);
+  const [readingLessons, setReadingLessons] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
 
@@ -22,7 +23,7 @@ function HomePage() {
       try {
         const response = await apiService.get('/api/v1/reading-lessons'); 
         if (response.data) {
-          setStories(response.data);
+          setReadingLessons(response.data);
           setLoading(false);
         } else {
           setError('No reading lessons found.');
@@ -48,9 +49,11 @@ function HomePage() {
   });
   const { watch, reset } = methods;
   const filters = watch();
-  const filterStories = applyFilter(stories, filters);
+  const filterReadingLessons = applyFilter(readingLessons, filters);
 
   return (
+    <div>
+    <Banner></Banner>
     <Container sx={{ display: "flex", minHeight: "100vh", mt: 3, ml: 1 }}>
       <Stack>
         <FormProvider methods={methods}>
@@ -78,43 +81,44 @@ function HomePage() {
               {error ? (
                 <Alert severity="error">{error}</Alert>
               ) : (
-                <ReadingList stories={filterStories} />
+                <ReadingList readingLessons={filterReadingLessons} id={readingLessons._id}/>
               )}
             </>
           )}
         </Box>
       </Stack>
     </Container>
+    </div>
   );
 }
 
-function applyFilter(stories, filters) {
+function applyFilter(readingLessons, filters) {
   const { sortBy } = filters;
-  let filteredStories = [...stories]; // Copy the stories array.
+  let filteredReadingLessons = [...readingLessons]; // Copy the readingLessons array.
 
   // SORT BY
   if (sortBy === "newest") {
-    filteredStories = orderBy(filteredStories, ["createdAt"], ["desc"]);
+    filteredReadingLessons = orderBy(filteredReadingLessons, ["createdAt"], ["desc"]);
   }
 
-  // FILTER STORIES
+  // FILTER readingLessons
   if (filters.level?.length > 0) {
-    filteredStories = filteredStories.filter((story) =>
+    filteredReadingLessons = filteredReadingLessons.filter((story) =>
       filters.level.includes(story.level)
     );
   }
   
   if (filters.category !== "All") {
-    filteredStories = filteredStories.filter(
+    filteredReadingLessons = filteredReadingLessons.filter(
       (story) => story.category === filters.category
     );
   }
   if (filters.searchQuery) {
-    filteredStories = filteredStories.filter((story) =>
+    filteredReadingLessons = filteredReadingLessons.filter((story) =>
       story.name.toLowerCase().includes(filters.searchQuery.toLowerCase())
     );
   }
-  return filteredStories;
+  return filteredReadingLessons;
 }
 
 export default HomePage;

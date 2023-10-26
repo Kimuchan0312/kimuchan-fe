@@ -3,7 +3,7 @@ import ReadingCard from './ReadingCard';
 import { Grid } from "@mui/material";
 import apiService from '../app/apiService';
 
-function ReadingList() {
+function ReadingList( id ) {
   const [lessons, setLessons] = useState([]);
 
   useEffect(() => {
@@ -20,6 +20,7 @@ function ReadingList() {
             title={lesson.title} 
             jlptLevel={lesson.jlptLevel}
             content={lesson.content}
+            id={lesson._id}
           />
         </Grid>
       ))}

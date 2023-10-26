@@ -106,7 +106,6 @@ function MainHeader() {
   };
 
   return (
-    <header className="banner">
       <AppBar position="static" sx={{ backgroundColor: "transparent" }}>
         <Toolbar variant="dense">
           <IconButton edge="start" aria-label="menu" sx={{ marginTop: 1}}>
@@ -134,16 +133,6 @@ function MainHeader() {
           </Box>
         </Toolbar>
       </AppBar>
-
-      <div className="banner_contents">
-        <h1 className="banner_title">
-          Practice Japanese reading effortlessly.
-        </h1>
-        <button variant="outlined" className="banner_button">
-          Read More
-        </button>
-      </div>
-    </header>
   );
 }
 

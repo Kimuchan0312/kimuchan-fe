@@ -1,0 +1,74 @@
+.banner {
+    object-fit: contain;
+    height: 400px;
+    position: relative;
+    background-color: #f5ebeb;
+  }
+  
+  .banner_contents {
+    margin-left: 30px;
+    padding-top: 120px;
+    height: 190px;
+  }
+  
+  .banner_title {
+    font-family: Inria Serif;
+    font-size: 36px;
+    font-style: normal;
+    font-weight: 600;
+  }
+  
+  .banner_button {
+    padding: 12px 24px; /* Adjust padding as needed */ /* This is an assumed color based on the image. Adjust as needed. */
+    border-radius: 50px;
+    background-color: #ECD3D3; /* This gives it the round corners. Adjust to your liking. */
+    color: #333; 
+    font-size: 16px; 
+    text-align: center;
+    cursor: pointer;
+    transition: background-color 0.3s ease; /* Smooth transition for hover effect */
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1); /* Adds a subtle shadow. Adjust as needed. */
+    border: 1px solid #000;
+  }
+  
+  .banner_button:hover {
+    background-color: #ffbfc8; /* Slightly lighter shade on hover for feedback. Adjust color as needed. */
+  }
+  
+  .banner_button:focus {
+    outline: none; /* Removes the default browser outline */
+  }
+  
+  /* For small screens */
+  @media (max-width: 375px) {
+    .banner {
+      height: 350px;
+      width: 100%;
+    }
+  
+    .banner_contents {
+      padding-top: 10px;
+      height: 140px;
+    }
+  
+    .banner_title {
+      font-size: 1rem;
+    }
+  }
+  
+  /* For medium screens */
+  @media (min-width: 360px) and (max-width: 767px) {
+    .banner {
+      height: 600px;
+    }
+  
+    .banner_contents {
+      padding-top: 80px;
+      height: 100px;
+    }
+  
+    .banner_title {
+      font-size: 2rem;
+    }
+  }
+  

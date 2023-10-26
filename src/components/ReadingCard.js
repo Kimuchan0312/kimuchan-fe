@@ -20,7 +20,7 @@ function ReadingCard({ title, jlptLevel, content, id }) {
 
         {/* Reading Lesson Content with "Read more" link */}
         <Typography variant="body1" color="textPrimary" paragraph>
-          {content.substring(0, 200)}{/* Display the first 200 characters */}
+          {content.substring(0, 100)}...
         </Typography>
         <Link component={RouterLink} to={`reading-lessons/${id}`} color="primary">
           Read more
