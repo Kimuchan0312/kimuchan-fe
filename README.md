@@ -37,16 +37,6 @@ Kimuchan is built using a collection of modern technologies to ensure performanc
 - **Node.js:** Core backend language.
 - **Express.js:** Web framework for Node.js.
 - **MongoDB:** Database for storing user data, vocabulary, and test results.
-  
-// Sample MongoDB code snippet
-const vocabulary1 = new Vocabulary({
-  word: 'こんにちは',
-  pronunciation: 'Konnichiwa',
-  meaning: 'Hello',
-  jlptLevel: 'N5',
-  categories: [category1._id],
-  ...
-});
 
 ### Frontend
 React.js: Library for building the user interface.
