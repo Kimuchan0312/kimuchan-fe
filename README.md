@@ -1,11 +1,107 @@
-# Kimuchan
+# Kimuchan 🌸: A Japanese Learning App 
 
-Stack:
-MaterialUI v5
-React Hook Form
-React Router v6
-axios
-json-server as the backend
+## Overview
+
+こんにちは (Konnichiwa)! Welcome to Kimuchan, your go-to web app for mastering the Japanese language. From vocabulary to reading tests, we're your one-stop location for all things 日本語 (Nihongo).
+
+## Table of Contents
+
+- [Quick Start](#quick-start)
+- [Docker Notes](#docker-notes)
+- [MongoDB Setup](#mongodb-setup)
+- [User Accounts](#user-accounts)
+- [Features](#features)
+  - [Vocabulary](#vocabulary)
+  - [Reading Lessons](#reading-lessons)
+  - [Tests](#tests)
+  - [Friendship & Community](#friendship--community)
+- [User Activity](#user-activity)
+- [FAQs](#faqs)
+- [License](#license)
+
+---
+
+## Quick Start
+
+1. **Clone the repository**
+2. **Install dependencies:**  
+   ```bash
+   npm install
+3. **Run the web app:**  
+npm start
+
+## User Accounts
+Your data is safe with us. We hash your passwords and keep your email confidential.
+
+# Regular User Example
+
+{
+  "email": "john.doe@example.com",
+  "username": "john_doe",
+  "role": "user",
+  ...
+}
+# Admin User Example
+{
+  "email": "jane.smith@example.com",
+  "role": "admin",
+  ...
+}
+
+## Features
+# Vocabulary
+Learn words like 'こんにちは' (Konnichiwa) and 'ありがとう' (Arigatou) with ease.
+
+const vocabulary1 = new Vocabulary({
+  word: 'こんにちは',
+  pronunciation: 'Konnichiwa',
+  meaning: 'Hello',
+  ...
+});
+
+# Reading Lessons
+Get lost in the fascinating culture of Japan while improving your reading comprehension.
+
+const readingLesson = new ReadingLesson({
+  title: '日本の文化',
+  content: '日本は四季折々の美しい自然と...',
+  ...
+});
+
+# Tests
+Challenge yourself with our comprehensive tests that cover various aspects of the Japanese language.
+
+const test = new Test({
+  title: 'Japanese Test',
+  description: 'A test to evaluate Japanese reading skills.',
+  ...
+});
+
+# Friendship & Community
+Why learn alone when you can make friends?
+
+const friendshipRequest = new Friendship({
+  user1: 'user123',
+  user2: 'user456',
+  status: 'pending',
+  ...
+});
+
+## User Activity
+Keep track of your learning milestones.
+
+const readingLessonActivity = new UserActivity({
+  user: userId,
+  activityType: 'readingLesson',
+  ...
+});
+
+
+## License
+MIT License. Freely use the code, but attribution is appreciated.
+
+Feel free to make any changes as you see fit!
+Hope this fits the bill! If you have any more specific requirements or questions, feel free to ask. Happy coding! 🌸👩‍💻👨‍💻
 
 <h1 align="center">Hi 👋, I'm Kim</h1>
 <h3 align="center">A passionate learner from Vietnam</h3>
