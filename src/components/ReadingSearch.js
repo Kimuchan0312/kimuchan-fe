@@ -3,7 +3,7 @@ import SearchIcon from "@mui/icons-material/Search";
 import React from "react";
 import { FTextField } from "./form";
 
-function ProductSearch() {
+function ReadingSearch() {
   return (
     <FTextField
       name="searchQuery"
@@ -20,4 +20,4 @@ function ProductSearch() {
   );
 }
 
-export default ProductSearch;
+export default ReadingSearch;

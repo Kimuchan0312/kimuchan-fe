@@ -5,8 +5,8 @@ function MainFooter() {
   return (
     <Typography variant="body2" color="text.secondary" align="center" p={1}>
       {"Copyright © "}
-      <Link color="inherit" href="https://www.coderschool.vn">
-        CoderSchool
+      <Link color="inherit" href="https://www.kimuchan.dev">
+        Kimuchan
       </Link>{" "}
       {new Date().getFullYear()}
       {"."}

@@ -1,24 +1,45 @@
 import React, { useState, useEffect } from "react";
 import { Alert, Box, Container, Stack } from "@mui/material";
-import ProductFilter from "../components/ProductFilter";
-import ProductSearch from "../components/ProductSearch";
-import ProductSort from "../components/ProductSort";
-import ProductList from "../components/ProductList";
 import { FormProvider } from "../components/form";
 import { useForm } from "react-hook-form";
 import apiService from "../app/apiService";
 import orderBy from "lodash/orderBy";
 import LoadingScreen from "../components/LoadingScreen";
+import ReadingFilter from "../components/ReadingFilter";
+import ReadingSearch from "../components/ReadingSearch";
+import ReadingSort from "../components/ReadingSort";
+import ReadingList from "../components/ReadingList";
+
 
 function HomePage() {
-  const [products, setProducts] = useState([]);
+  const [stories, setStories] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
 
+  useEffect(() => {
+    const fetchReadingLesson = async () => {
+
+      try {
+        const response = await apiService.get('/api/v1/reading-lessons'); 
+        if (response.data) {
+          setStories(response.data);
+          setLoading(false);
+        } else {
+          setError('No reading lessons found.');
+          setLoading(false);
+        }
+      } catch (error) {
+        setError('Failed to fetch reading lessons.');
+        setLoading(false);
+      }
+    };
+
+    fetchReadingLesson();
+  }, []);
+
   const defaultValues = {
-    gender: [],
+    level: [],
     category: "All",
-    priceRange: "",
     sortBy: "featured",
     searchQuery: ""
   };
@@ -27,29 +48,13 @@ function HomePage() {
   });
   const { watch, reset } = methods;
   const filters = watch();
-  const filterProducts = applyFilter(products, filters);
-
-  useEffect(() => {
-    const getProducts = async () => {
-      setLoading(true);
-      try {
-        const res = await apiService.get("/products");
-        setProducts(res.data);
-        setError("");
-      } catch (error) {
-        console.log(error);
-        setError(error.message);
-      }
-      setLoading(false);
-    };
-    getProducts();
-  }, []);
+  const filterStories = applyFilter(stories, filters);
 
   return (
-    <Container sx={{ display: "flex", minHeight: "100vh", mt: 3 }}>
+    <Container sx={{ display: "flex", minHeight: "100vh", mt: 3, ml: 1 }}>
       <Stack>
         <FormProvider methods={methods}>
-          <ProductFilter resetFilter={reset} />
+          <ReadingFilter resetFilter={reset} />
         </FormProvider>
       </Stack>
       <Stack sx={{ flexGrow: 1 }}>
@@ -61,8 +66,8 @@ function HomePage() {
             justifyContent="space-between"
             mb={2}
           >
-            <ProductSearch />
-            <ProductSort />
+            <ReadingSearch />
+            <ReadingSort />
           </Stack>
         </FormProvider>
         <Box sx={{ position: "relative", height: 1 }}>
@@ -73,7 +78,7 @@ function HomePage() {
               {error ? (
                 <Alert severity="error">{error}</Alert>
               ) : (
-                <ProductList products={filterProducts} />
+                <ReadingList stories={filterStories} />
               )}
             </>
           )}
@@ -83,52 +88,33 @@ function HomePage() {
   );
 }
 
-function applyFilter(products, filters) {
+function applyFilter(stories, filters) {
   const { sortBy } = filters;
-  let filteredProducts = products;
+  let filteredStories = [...stories]; // Copy the stories array.
 
   // SORT BY
-  if (sortBy === "featured") {
-    filteredProducts = orderBy(products, ["sold"], ["desc"]);
-  }
   if (sortBy === "newest") {
-    filteredProducts = orderBy(products, ["createdAt"], ["desc"]);
-  }
-  if (sortBy === "priceDesc") {
-    filteredProducts = orderBy(products, ["price"], ["desc"]);
-  }
-  if (sortBy === "priceAsc") {
-    filteredProducts = orderBy(products, ["price"], ["asc"]);
+    filteredStories = orderBy(filteredStories, ["createdAt"], ["desc"]);
   }
 
-  // FILTER PRODUCTS
-  if (filters.gender?.length > 0) {
-    filteredProducts = products.filter((product) =>
-      filters.gender.includes(product.gender)
+  // FILTER STORIES
+  if (filters.level?.length > 0) {
+    filteredStories = filteredStories.filter((story) =>
+      filters.level.includes(story.level)
     );
   }
+  
   if (filters.category !== "All") {
-    filteredProducts = products.filter(
-      (product) => product.category === filters.category
+    filteredStories = filteredStories.filter(
+      (story) => story.category === filters.category
     );
-  }
-  if (filters.priceRange) {
-    filteredProducts = products.filter((product) => {
-      if (filters.priceRange === "below") {
-        return product.price < 25;
-      }
-      if (filters.priceRange === "between") {
-        return product.price >= 25 && product.price <= 75;
-      }
-      return product.price > 75;
-    });
   }
   if (filters.searchQuery) {
-    filteredProducts = products.filter((product) =>
-      product.name.toLowerCase().includes(filters.searchQuery.toLowerCase())
+    filteredStories = filteredStories.filter((story) =>
+      story.name.toLowerCase().includes(filters.searchQuery.toLowerCase())
     );
   }
-  return filteredProducts;
+  return filteredStories;
 }
 
 export default HomePage;
