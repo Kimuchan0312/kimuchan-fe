@@ -21,7 +21,7 @@
 
 ---
 
-## Quick Start
+# Quick Start
 
 1. **Clone the repository**
 2. **Install dependencies:**  
@@ -30,10 +30,10 @@
 3. **Run the web app:**  
 npm start
 
-## User Accounts
+# User Accounts
 Your data is safe with us. We hash your passwords and keep your email confidential.
 
-# Regular User Example
+## Regular User Example
 
 {
   "email": "john.doe@example.com",
@@ -41,15 +41,15 @@ Your data is safe with us. We hash your passwords and keep your email confidenti
   "role": "user",
   ...
 }
-# Admin User Example
+## Admin User Example
 {
   "email": "jane.smith@example.com",
   "role": "admin",
   ...
 }
 
-## Features
-# Vocabulary
+# Features
+## Vocabulary
 Learn words like 'こんにちは' (Konnichiwa) and 'ありがとう' (Arigatou) with ease.
 
 const vocabulary1 = new Vocabulary({
@@ -59,7 +59,7 @@ const vocabulary1 = new Vocabulary({
   ...
 });
 
-# Reading Lessons
+## Reading Lessons
 Get lost in the fascinating culture of Japan while improving your reading comprehension.
 
 const readingLesson = new ReadingLesson({
@@ -68,7 +68,7 @@ const readingLesson = new ReadingLesson({
   ...
 });
 
-# Tests
+## Tests
 Challenge yourself with our comprehensive tests that cover various aspects of the Japanese language.
 
 const test = new Test({
@@ -77,7 +77,7 @@ const test = new Test({
   ...
 });
 
-# Friendship & Community
+## Friendship & Community
 Why learn alone when you can make friends?
 
 const friendshipRequest = new Friendship({
