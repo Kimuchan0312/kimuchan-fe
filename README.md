@@ -7,8 +7,6 @@
 ## Table of Contents
 
 - [Quick Start](#quick-start)
-- [Docker Notes](#docker-notes)
-- [MongoDB Setup](#mongodb-setup)
 - [Tech Stack](#tech-stack)
 - [Features](#features)
   - [Vocabulary](#vocabulary)
