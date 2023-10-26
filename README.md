@@ -9,7 +9,7 @@
 - [Quick Start](#quick-start)
 - [Docker Notes](#docker-notes)
 - [MongoDB Setup](#mongodb-setup)
-- [User Accounts](#user-accounts)
+- [Tech Stack](#tech-stack)
 - [Features](#features)
   - [Vocabulary](#vocabulary)
   - [Reading Lessons](#reading-lessons)
@@ -30,34 +30,39 @@
 3. **Run the web app:**  
 npm start
 
-# User Accounts
-Your data is safe with us. We hash your passwords and keep your email confidential.
+# 🛠 Tech Stack
 
-## Regular User Example
+Kimuchan is built using a collection of modern technologies to ensure performance, scalability, and ease of use. Below is the list of technologies that power Kimuchan:
 
-{
-  "email": "john.doe@example.com",
-  "username": "john_doe",
-  "role": "user",
-  ...
-}
-## Admin User Example
-{
-  "email": "jane.smith@example.com",
-  "role": "admin",
-  ...
-}
+### Backend
 
-# Features
-## Vocabulary
-Learn words like 'こんにちは' (Konnichiwa) and 'ありがとう' (Arigatou) with ease.
-
+- **Node.js:** Core backend language.
+- **Express.js:** Web framework for Node.js.
+- **MongoDB:** Database for storing user data, vocabulary, and test results.
+  
+// Sample MongoDB code snippet
 const vocabulary1 = new Vocabulary({
   word: 'こんにちは',
   pronunciation: 'Konnichiwa',
   meaning: 'Hello',
+  jlptLevel: 'N5',
+  categories: [category1._id],
   ...
 });
+
+### Frontend
+React.js: Library for building the user interface.
+Material UI: For a sleek and responsive UI design.
+### Containerization
+Docker
+
+### DevOps
+Git: Version Control.
+CI/CD Pipeline: Automated testing and deployment.
+
+# Features
+## Vocabulary
+Learn difficult words like '粗筋' (Arasuji) and '異議' (Igi) with ease.
 
 ## Reading Lessons based on JLPT Reading Tests: Prep Like a Pro 🎯
 
@@ -71,43 +76,22 @@ One of the standout features of Kimuchan is the dedicated practice tests for JLP
 
 - **Unlimited Retakes:** Yes, you read that right! Take the tests as many times as you want until you feel confident.
 
-
 ## Tests
-Challenge yourself with our comprehensive tests that cover various aspects of the Japanese language.
-
-const test = new Test({
-  title: 'Japanese Test',
-  description: 'A test to evaluate Japanese reading skills.',
-  ...
-});
+Challenge yourself with our JLPT reading tests that cover various topics of the Japanese language.
 
 ## Friendship & Community
 Why learn alone when you can make friends?
 
-const friendshipRequest = new Friendship({
-  user1: 'user123',
-  user2: 'user456',
-  status: 'pending',
-  ...
-});
-
 ## User Activity
 Keep track of your learning milestones.
 
-const readingLessonActivity = new UserActivity({
-  user: userId,
-  activityType: 'readingLesson',
-  ...
-});
 ## FAQs
 
 - **Is Kimuchan beginner-friendly?**
   - Yes, we cater to learners of all levels.
 
 - **Can I practice for the JLPT exams?**
-  - Absolutely! Our JLPT Reading Tests feature offers a comprehensive and realistic practice environment to help you prepare effectively for your exams.
-
-
+  - Absolutely! Our JLPT Reading Tests feature offers a free and realistic practice environment to help you prepare effectively for your exams.
 
 ## License
 MIT License. Freely use the code, but attribution is appreciated.
