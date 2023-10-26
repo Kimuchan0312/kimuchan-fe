@@ -99,11 +99,6 @@ const readingLessonActivity = new UserActivity({
   activityType: 'readingLesson',
   ...
 });
-
-
-Incorporate this additional information into the FAQ section as well:
-
-```markdown
 ## FAQs
 
 - **Is Kimuchan beginner-friendly?**
