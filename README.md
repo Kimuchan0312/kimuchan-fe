@@ -59,14 +59,18 @@ const vocabulary1 = new Vocabulary({
   ...
 });
 
-## Reading Lessons
-Get lost in the fascinating culture of Japan while improving your reading comprehension.
+## Reading Lessons based on JLPT Reading Tests: Prep Like a Pro 🎯
 
-const readingLesson = new ReadingLesson({
-  title: '日本の文化',
-  content: '日本は四季折々の美しい自然と...',
-  ...
-});
+One of the standout features of Kimuchan is the dedicated practice tests for JLPT (Japanese Language Proficiency Test) levels. Whether you're eyeing N5 or striving for N1, we've got your back!
+
+- **Realistic Test Scenarios:** Our tests mimic the JLPT format, offering you an authentic exam experience.
+  
+- **Level-Specific Content:** Tackling N5? Or perhaps challenging N2? Our questions adapt to your chosen JLPT level.
+  
+- **Instant Feedback:** Get real-time results to understand your strengths and weaknesses better.
+
+- **Unlimited Retakes:** Yes, you read that right! Take the tests as many times as you want until you feel confident.
+
 
 ## Tests
 Challenge yourself with our comprehensive tests that cover various aspects of the Japanese language.
@@ -95,6 +99,19 @@ const readingLessonActivity = new UserActivity({
   activityType: 'readingLesson',
   ...
 });
+
+
+Incorporate this additional information into the FAQ section as well:
+
+```markdown
+## FAQs
+
+- **Is Kimuchan beginner-friendly?**
+  - Yes, we cater to learners of all levels.
+
+- **Can I practice for the JLPT exams?**
+  - Absolutely! Our JLPT Reading Tests feature offers a comprehensive and realistic practice environment to help you prepare effectively for your exams.
+
 
 
 ## License
