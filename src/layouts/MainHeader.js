@@ -17,7 +17,7 @@ import { useNavigate } from "react-router-dom";
 import "../layouts/MainHeader.css";
 import { useMediaQuery } from "@mui/material";
 
-const pages = ["PREPARE", "TEST", "REVIEW"];
+const pages = ["ABOUT", "TEST", "REVIEW"];
 
 const UserMenu = ({ user, handleLogout }) => {
   const [anchorEl, setAnchorEl] = useState(null);
@@ -35,6 +35,7 @@ const UserMenu = ({ user, handleLogout }) => {
     handleMenuClose(); // Close the menu
     navigate('/account-settings'); // Navigate to the account settings page
   };
+
 
   return (
     <>
@@ -102,7 +103,6 @@ function MainHeader() {
   const navigate = useNavigate();
   const isDesktop = useMediaQuery((theme) => theme.breakpoints.up("md"));
   
-
   const handleLogout = async () => {
     try {
       await logout();
@@ -111,7 +111,11 @@ function MainHeader() {
       console.error(error);
     }
   };
-
+  const handleNavigate = (page) => {
+    const route = page.toLowerCase(); // Converts 'ABOUT' to 'about'
+    navigate(`/${route}`); // Navigates to the corresponding route
+  };
+  
   return (
       <AppBar position="static" sx={{ backgroundColor: "transparent" }}>
         <Toolbar variant="dense">
@@ -119,19 +123,17 @@ function MainHeader() {
             <Logo />
           </IconButton>
 
-          <Box pages={pages} sx={{ marginLeft: 10, flexGrow: 2 }}>
-            {isDesktop ? (
-              // Render NavMenu directly for desktop
-              pages.map((page) => (
-                <Button key={page}>
-                  {page}
-                </Button>
-              ))
-            ) : (
-              // Render IconButton which triggers NavMenu for smaller screens
-              <NavMenu sx={{ marginLeft: "50"}} pages={pages} />
-            )}
-          </Box>
+          <Box sx={{ marginLeft: 10, flexGrow: 2 }}>
+          {isDesktop ? (
+            pages.map((page) => (
+              <Button key={page} onClick={() => handleNavigate(page)}>
+                {page}
+              </Button>
+            ))
+          ) : (
+            <NavMenu pages={pages} handleNavigate={handleNavigate} />
+          )}
+        </Box>
 
           <Box sx={{ flexGrow: 1 }} />
 

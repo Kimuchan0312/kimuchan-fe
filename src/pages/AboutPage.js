@@ -1,5 +1,4 @@
-import React from "react";
-import { Container, Typography, Paper, Divider } from "@mui/material";
+import { Container, Typography, Paper, Divider, Accordion, AccordionSummary, AccordionDetails } from "@mui/material";
 import CheckCircleOutlineIcon from "@mui/icons-material/CheckCircleOutline";
 import SchoolIcon from "@mui/icons-material/School";
 import AssessmentIcon from "@mui/icons-material/Assessment";
@@ -69,17 +68,25 @@ function AboutPage() {
         <Typography variant="h4" gutterBottom>
           FAQs
         </Typography>
-        <Typography variant="body1" paragraph>
-          <strong>Is Kimuchan beginner-friendly?</strong>{" "}
-          <CheckCircleOutlineIcon /> <br />
-          Yes, we cater to learners of all levels.
-        </Typography>
-        <Typography variant="body1" paragraph>
-          <strong>Can I practice for the JLPT exams?</strong> <SchoolIcon />{" "}
-          <br />
-          Absolutely! Our JLPT Reading Tests feature offers a free and realistic
+        <Accordion>
+          <AccordionSummary >
+            <Typography>Is Kimuchan beginner-friendly?</Typography>
+          </AccordionSummary>
+          <AccordionDetails>
+            <Typography>
+              Yes, we cater to learners of all levels.
+            </Typography>
+          </AccordionDetails>
+          <AccordionSummary >
+            <Typography>Can I practice for the JLPT exams?</Typography>
+          </AccordionSummary>
+          <AccordionDetails>
+            <Typography>
+            Absolutely! Our JLPT Reading Tests feature offers a free and realistic
           practice environment to help you prepare effectively for your exams.
-        </Typography>
+            </Typography>
+          </AccordionDetails>
+        </Accordion>
       </Paper>
     </Container>
   );

@@ -52,6 +52,7 @@ function DetailPage() {
                     padding: "10px 20px",
                     border: "1px solid #000",
                     backgroundColor: "#ECD3D3",
+                    margin: '0.5rem'
                   }}
                   label={readingLesson.jlptLevel}
                 />

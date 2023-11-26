@@ -1,5 +1,6 @@
 .banner {
-  object-fit: contain;
+  background: url('public/Banner.png') no-repeat center center;
+  object-fit: cover; /* Change to "cover" for a better image fit */
   height: 400px;
   position: relative;
 }
@@ -7,63 +8,63 @@
 .banner_contents {
   margin-left: 30px;
   padding-top: 120px;
-  height: 190px;
+  height: auto; /* Remove fixed height for better responsiveness */
 }
 
 .banner_title {
   font-family: "Inria Serif", serif;
   font-size: 36px;
-  font-style: italic;
-  font-weight: 400;
+  font-weight: 700;
+  font-style: italic; 
 }
 
 .banner_button {
-  padding: 12px 24px; /* Adjust padding as needed */ /* This is an assumed color based on the image. Adjust as needed. */
+  margin-top: 1rem; 
+  padding: 12px 24px;
   border-radius: 50px;
-  background-color: #ecd3d3; /* This gives it the round corners. Adjust to your liking. */
+  background-color: #ecd3d3;
   color: #333;
   font-size: 16px;
   text-align: center;
   cursor: pointer;
-  transition: background-color 0.3s ease; /* Smooth transition for hover effect */
-  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1); /* Adds a subtle shadow. Adjust as needed. */
+  transition: background-color 0.3s ease;
+  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
   border: 1px solid #000;
+  text-decoration: none; /* Remove underlines on links */
+  display: inline-block; /* Ensure button doesn't take full width */
 }
 
 .banner_button:hover {
-  background-color: #ffbfc8; /* Slightly lighter shade on hover for feedback. Adjust color as needed. */
+  background-color: #ffbfc8;
 }
 
 .banner_button:focus {
-  outline: none; /* Removes the default browser outline */
+  outline: none;
 }
 
 /* For small screens */
 @media (max-width: 375px) {
   .banner {
     height: 350px;
-    width: 100%;
   }
 
   .banner_contents {
     padding-top: 10px;
-    height: 140px;
   }
 
   .banner_title {
-    font-size: 1rem;
+    font-size: 24px; /* Adjust font size for small screens */
   }
 }
 
 /* For medium screens */
-@media (min-width: 360px) and (max-width: 767px) {
+@media (min-width: 768px) {
   .banner {
     height: 600px;
   }
 
   .banner_contents {
     padding-top: 80px;
-    height: 100px;
   }
 
   .banner_title {

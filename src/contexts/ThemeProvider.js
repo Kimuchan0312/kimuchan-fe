@@ -35,7 +35,7 @@ function ThemeProvider({ children }) {
     },
     shape: { borderRadius: 8 },
     typography: {
-      fontFamily: "Inria Serif",
+      fontFamily: "Inter",
       h1: {
         fontSize: "2.5rem",
         fontWeight: 500,
