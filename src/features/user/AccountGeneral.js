@@ -1,15 +1,40 @@
-import React, { useCallback } from "react";
-import { Box, Grid, Card, Stack, Typography } from "@mui/material";
-import { LoadingButton } from "@mui/lab";
+import React, { useCallback, useState } from "react";
+import { Box, Grid, Card, Stack, Typography, Button } from "@mui/material";
 import useAuth from "../../hooks/useAuth";
 
 import { useForm } from "react-hook-form";
 import * as yup from "yup";
 import { yupResolver } from "@hookform/resolvers/yup";
-import { FormProvider, FTextField, FUploadAvatar } from "../../components/form";
+import {
+  FormProvider,
+  FTextField,
+  FUploadAvatar,
+} from "../../components/form";
 import { fData } from "../../utils/numberFormat";
-import { useDispatch, useSelector } from "react-redux";
-import { updateUserProfile } from "./userSlice";
+
+async function updateProfileAPI(userId, userData, token) {
+  try {
+    const response = await fetch(`/api/users/${userId}`, {
+      method: "PATCH",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+      body: JSON.stringify(userData),
+    });
+
+    if (!response.ok) {
+      throw new Error(`HTTP error! status: ${response.status}`);
+    }
+
+    const data = await response.json();
+    return data; // This will be the updated user data from the server
+  } catch (error) {
+    console.error("Failed to update profile:", error);
+    // Handle the error accordingly in your UI
+    throw error;
+  }
+}
 
 const UpdateUserSchema = yup.object().shape({
   name: yup.string().required("Name is required"),
@@ -17,13 +42,13 @@ const UpdateUserSchema = yup.object().shape({
 
 function AccountGeneral() {
   const { user } = useAuth();
-  const isLoading = useSelector((state) => state.user.isLoading);
+  const [isLoading, setIsLoading] = useState(false);
+  const [message, setMessage] = useState("");
 
   const defaultValues = {
     name: user?.name || "",
     email: user?.email || "",
-    jobTitle: user?.jobTitle || "",
-    company: user?.company || "",
+    gender: user?.gender || "",
     avatarUrl: user?.avatarUrl || "",
     coverUrl: user?.coverUrl || "",
     phoneNumber: user?.phoneNumber || "",
@@ -43,8 +68,6 @@ function AccountGeneral() {
     formState: { isSubmitting },
   } = methods;
 
-  const dispatch = useDispatch();
-
   const handleDrop = useCallback(
     (acceptedFiles) => {
       const file = acceptedFiles[0];
@@ -61,8 +84,19 @@ function AccountGeneral() {
     [setValue]
   );
 
-  const onSubmit = (data) => {
-    dispatch(updateUserProfile({ userId: user._id, ...data }));
+  const onSubmit = async (data) => {
+    setIsLoading(true);
+    setMessage("");
+    try {
+      // Perform the API call to update the user profile
+      const result = await updateProfileAPI(user._id, data);
+      setMessage("Profile updated successfully!");
+      console.log(result);
+    } catch (error) {
+      setMessage("Failed to update profile.");
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   return (
@@ -110,9 +144,6 @@ function AccountGeneral() {
               <FTextField name="name" label="Name" />
               <FTextField name="email" label="Email" disabled />
 
-              <FTextField name="jobTitle" label="Job Title" />
-              <FTextField name="company" label="Company" />
-
               <FTextField name="phoneNumber" label="Phone Number" />
               <FTextField name="address" label="Address" />
 
@@ -121,16 +152,17 @@ function AccountGeneral() {
             </Box>
 
             <Stack spacing={3} alignItems="flex-end" sx={{ mt: 3 }}>
-              <FTextField name="coverUrl" label="Home Profile Cover Image" />
               <FTextField name="aboutMe" multiline rows={4} label="About Me" />
 
-              <LoadingButton
+              <Button
                 type="submit"
                 variant="contained"
+                sx={{ color: 'black', backgroundColor: '#D1E3D3', '&:hover': { backgroundColor: '#8BB08F' } }}
                 loading={isSubmitting || isLoading}
               >
                 Save Changes
-              </LoadingButton>
+              </Button>
+              {message && <Typography color="secondary">{message}</Typography>}
             </Stack>
           </Card>
         </Grid>

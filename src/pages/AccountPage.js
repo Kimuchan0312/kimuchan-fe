@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Container, Tab, Box, Tabs, Typography } from "@mui/material";
+import { Container, Tab, Box, Tabs } from "@mui/material";
 import AccountBoxIcon from "@mui/icons-material/AccountBox";
 import ShareIcon from "@mui/icons-material/Share";
 import AccountGeneral from "../features/user/AccountGeneral";
@@ -23,10 +23,7 @@ function AccountPage() {
   ];
 
   return (
-    <Container>
-      <Typography variant="h5" gutterBottom>
-        Account Settings
-      </Typography>
+    <Container sx={{ margin: "1rem" }}>
       <Tabs
         value={currentTab}
         scrollButtons="auto"

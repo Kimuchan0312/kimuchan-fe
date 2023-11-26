@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 
 import { Stack, Card, InputAdornment } from "@mui/material";
 import LinkedInIcon from "@mui/icons-material/LinkedIn";
@@ -10,8 +10,31 @@ import { LoadingButton } from "@mui/lab";
 import { useForm } from "react-hook-form";
 import { FormProvider, FTextField } from "../../components/form";
 import useAuth from "../../hooks/useAuth";
-import { useDispatch, useSelector } from "react-redux";
-import { updateUserProfile } from "./userSlice";
+import { toast } from "react-toastify";
+
+async function updateProfileAPI(userId, userData, token) {
+  try {
+    const response = await fetch(`/api/users/${userId}`, {
+      method: 'PUT',
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${token}`,
+      },
+      body: JSON.stringify(userData),
+    });
+
+    if (!response.ok) {
+      throw new Error(`HTTP error! status: ${response.status}`);
+    }
+
+    const data = await response.json();
+    return data; // This will be the updated user data from the server
+  } catch (error) {
+    console.error("Failed to update profile:", error);
+    // Handle the error accordingly in your UI
+    throw error;
+  }
+}
 
 const SOCIAL_LINKS = [
   {
@@ -34,7 +57,7 @@ const SOCIAL_LINKS = [
 
 function AccountSocialLinks() {
   const { user } = useAuth();
-  const isLoading = useSelector((state) => state.user.isLoading);
+  const [isLoading, setIsLoading] = useState(false);
 
   const defaultValues = {
     facebookLink: user?.facebookLink || "",
@@ -46,14 +69,23 @@ function AccountSocialLinks() {
   const methods = useForm({
     defaultValues,
   });
+
   const {
     handleSubmit,
     formState: { isSubmitting },
   } = methods;
-  const dispatch = useDispatch();
 
   const onSubmit = async (data) => {
-    dispatch(updateUserProfile({ userId: user._id, ...data }));
+    setIsLoading(true);
+    try {
+      const updatedUser = await updateProfileAPI(user._id, data, user.token);
+      // Convert updated user data to a string if necessary, or use a specific field
+      toast.success(`User updated: ${updatedUser.username}`); // Assuming username is a field you want to display
+    } catch (error) {
+      toast.error("Failed to update profile. Please try again later.");
+    } finally {
+      setIsLoading(false); // Stop loading whether the update was successful or not
+    }
   };
 
   return (
@@ -76,6 +108,7 @@ function AccountSocialLinks() {
             type="submit"
             variant="contained"
             loading={isSubmitting || isLoading}
+            sx={{ color: 'black', backgroundColor: '#D1E3D3', '&:hover': { backgroundColor: '#8BB08F' } }}
           >
             Save Changes
           </LoadingButton>
