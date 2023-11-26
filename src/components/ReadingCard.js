@@ -4,8 +4,7 @@ import { Link as RouterLink } from "react-router-dom"; // Import Link from React
 function ReadingCard({ title, jlptLevel, content, id }) {
   return (
     <Card variant="outlined" sx={{ backgroundColor: "rgba(0, 0, 0, 0.05)", maxWidth: '600px', margin: 'auto' }}>
-      <CardContent>
-        {/* Title & JLPT Level as a Link */}
+      <CardContent >
         <Box display="flex" justifyContent="space-between" alignItems="center" marginBottom={2}>
           <Link component={RouterLink} to={`reading-lessons/${id}`} variant="h4" color="textPrimary">
             {title}
@@ -22,9 +21,9 @@ function ReadingCard({ title, jlptLevel, content, id }) {
         <Typography variant="body1" color="textPrimary" paragraph>
           {content.substring(0, 100)}...
         </Typography>
-        <Link component={RouterLink} to={`reading-lessons/${id}`} color="primary">
+        <Button component={RouterLink} to={`reading-lessons/${id}`} color="primary">
           Read more
-        </Link>
+        </Button>
       </CardContent>
     </Card>
   );

@@ -21,6 +21,7 @@ const pages = ["PREPARE", "TEST", "REVIEW"];
 
 const UserMenu = ({ user, handleLogout }) => {
   const [anchorEl, setAnchorEl] = useState(null);
+  const navigate = useNavigate();
 
   const handleProfileMenuOpen = (event) => {
     setAnchorEl(event.currentTarget);
@@ -28,6 +29,11 @@ const UserMenu = ({ user, handleLogout }) => {
 
   const handleMenuClose = () => {
     setAnchorEl(null);
+  };
+
+  const handleAccountSettings = () => {
+    handleMenuClose(); // Close the menu
+    navigate('/account-settings'); // Navigate to the account settings page
   };
 
   return (
@@ -44,7 +50,7 @@ const UserMenu = ({ user, handleLogout }) => {
         onClose={handleMenuClose}
       >
         <MenuItem onClick={handleMenuClose}>My Profile</MenuItem>
-        <MenuItem onClick={handleMenuClose}>Account Settings</MenuItem>
+        <MenuItem onClick={handleAccountSettings}>Account Settings</MenuItem>
         <Divider />
         <MenuItem onClick={handleLogout}>Logout</MenuItem>
       </Menu>
@@ -95,6 +101,7 @@ function MainHeader() {
   const { user, logout } = useAuth();
   const navigate = useNavigate();
   const isDesktop = useMediaQuery((theme) => theme.breakpoints.up("md"));
+  
 
   const handleLogout = async () => {
     try {
@@ -129,8 +136,8 @@ function MainHeader() {
           <Box sx={{ flexGrow: 1 }} />
 
           <Box>
-            <UserMenu user={user} handleLogout={handleLogout} />
-          </Box>
+    <UserMenu user={user} handleLogout={handleLogout} navigate={navigate} />
+  </Box>
         </Toolbar>
       </AppBar>
   );

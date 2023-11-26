@@ -7,9 +7,10 @@ export const SORT_BY_OPTIONS = [
   { value: "newest", label: "Newest" },
 ];
 
-export const FILTER_LEVEL_OPTIONS = ["JLPT N1", "JLPT N2", "JLPT N3", "JLPT N4", "JLPT N5"];
+export const FILTER_LEVEL_OPTIONS = ["N1", "N2", "N3", "N4", "N5"];
 
 function ReadingFilter({ resetFilter }) {
+
   return (
     <Stack spacing={3} sx={{ p: 3, width: 250 }}>
       <Stack spacing={1}>
@@ -17,7 +18,7 @@ function ReadingFilter({ resetFilter }) {
           Level
         </Typography>
         <FMultiCheckbox
-          name="level"
+          name="jlptLevel"
           options={FILTER_LEVEL_OPTIONS}
           sx={{ width: 1 }}
         />
@@ -26,7 +27,7 @@ function ReadingFilter({ resetFilter }) {
       <Box>
         <Button
           size="large"
-          type="submit"
+          type="button"
           color="inherit"
           variant="outlined"
           onClick={resetFilter}

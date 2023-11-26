@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Alert, Box, Container, Stack } from "@mui/material";
+import { Alert, Box, Container, Pagination, Stack } from "@mui/material";
 import { FormProvider } from "../components/form";
 import { useForm } from "react-hook-form";
 import apiService from "../app/apiService";
@@ -16,6 +16,22 @@ function HomePage() {
   const [readingLessons, setReadingLessons] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
+  const [currentPage, setCurrentPage] = useState(1);
+  const [itemsPerPage, setItemsPerPage] = useState(6); 
+
+
+  const defaultValues = {
+    jlptLevel: [],
+    sortBy: "featured",
+    searchQuery: ""
+  };
+  const methods = useForm({
+    defaultValues,
+  });
+  const { watch, reset } = methods;
+  const filters = watch();
+  console.log("Current filters:", filters);
+  const filterReadingLessons = applyFilter(readingLessons, filters, currentPage, itemsPerPage);
 
   useEffect(() => {
     const fetchReadingLesson = async () => {
@@ -38,18 +54,12 @@ function HomePage() {
     fetchReadingLesson();
   }, []);
 
-  const defaultValues = {
-    level: [],
-    category: "All",
-    sortBy: "featured",
-    searchQuery: ""
-  };
-  const methods = useForm({
-    defaultValues,
-  });
-  const { watch, reset } = methods;
-  const filters = watch();
-  const filterReadingLessons = applyFilter(readingLessons, filters);
+  function handlePageChange(newPage) {
+    setCurrentPage(newPage);
+  }
+
+  const totalPages = Math.ceil(readingLessons.length / itemsPerPage);
+
 
   return (
     <div>
@@ -81,44 +91,49 @@ function HomePage() {
               {error ? (
                 <Alert severity="error">{error}</Alert>
               ) : (
-                <ReadingList readingLessons={filterReadingLessons} id={readingLessons._id}/>
+                <ReadingList readingLessons={filterReadingLessons}/>
               )}
             </>
           )}
         </Box>
+        <Pagination
+        count={totalPages} 
+        page={currentPage} 
+        onChange={(event, page) => handlePageChange(page)} 
+      />
       </Stack>
     </Container>
     </div>
   );
 }
 
-function applyFilter(readingLessons, filters) {
-  const { sortBy } = filters;
-  let filteredReadingLessons = [...readingLessons]; // Copy the readingLessons array.
+function applyFilter(readingLessons, filters, currentPage, itemsPerPage) {
+  const { sortBy, searchQuery } = filters;
+  const startIndex = (currentPage - 1) * itemsPerPage;
+  const endIndex = startIndex + itemsPerPage;
+  let filteredReadingLessons = readingLessons;
 
   // SORT BY
   if (sortBy === "newest") {
     filteredReadingLessons = orderBy(filteredReadingLessons, ["createdAt"], ["desc"]);
   }
 
-  // FILTER readingLessons
-  if (filters.level?.length > 0) {
-    filteredReadingLessons = filteredReadingLessons.filter((story) =>
-      filters.level.includes(story.level)
+  // FILTER BY JLPT LEVEL
+  if (filters.jlptLevel?.length > 0) {
+    filteredReadingLessons = readingLessons.filter((readingLesson) =>
+      filters.jlptLevel.includes(readingLesson.jlptLevel)
     );
   }
+
+  // FILTER BY SEARCH QUERY
+  if (searchQuery) {
+    filteredReadingLessons = filteredReadingLessons.filter((lesson) =>
+      lesson.title.toLowerCase().includes(searchQuery.toLowerCase())
+    );
+  }
+  console.log("Filtered lessons:", filteredReadingLessons);
+  return filteredReadingLessons.slice(startIndex, endIndex);
   
-  if (filters.category !== "All") {
-    filteredReadingLessons = filteredReadingLessons.filter(
-      (story) => story.category === filters.category
-    );
-  }
-  if (filters.searchQuery) {
-    filteredReadingLessons = filteredReadingLessons.filter((story) =>
-      story.name.toLowerCase().includes(filters.searchQuery.toLowerCase())
-    );
-  }
-  return filteredReadingLessons;
 }
 
 export default HomePage;

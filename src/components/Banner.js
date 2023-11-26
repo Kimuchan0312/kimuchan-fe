@@ -1,15 +1,20 @@
 import React from "react";
+import { Link } from "react-router-dom"; 
+
+
 
 function Banner() {
   return (
     <header className="banner">
       <div className="banner_contents">
-        <h1 className="banner_title">
+        <h2 className="banner_title">
           Practice Japanese reading effortlessly.
-        </h1>
-        <button variant="outlined" className="banner_button">
-          Read More
-        </button>
+        </h2>
+        <Link to="/about"> 
+          <button variant="outlined" className="banner_button">
+            Read More
+          </button>
+        </Link>
       </div>
     </header>
   );
