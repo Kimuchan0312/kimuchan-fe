@@ -128,6 +128,11 @@ function RegisterPage() {
             type="submit"
             variant="contained"
             loading={isSubmitting}
+            sx={{
+              backgroundColor: "#ECD3D3",
+              "&:hover": { backgroundColor: "#ECD3E1" },
+              color: "#000"
+            }}
           >
             Register
           </LoadingButton>

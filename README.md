@@ -1,8 +1,8 @@
-# Kimuchan 🌸: A Japanese Learning App 
+# Kimuchan: A Japanese Reading Learning App 
 
 ## Overview
 
-こんにちは (Konnichiwa)! Welcome to Kimuchan, your go-to web app for mastering the Japanese language. From vocabulary to reading tests, we're your one-stop location for all things 日本語 (Nihongo).
+Welcome to Kimuchan, your go-to web app for mastering the Japanese language.
 
 ## Table of Contents
 
@@ -50,7 +50,7 @@ CI/CD Pipeline: Automated testing and deployment.
 
 # Features
 ## Vocabulary
-Learn difficult words like '粗筋' (Arasuji) and '異議' (Igi) with ease.
+Learn new vocabularies based on JLPT Levels.
 
 ## Reading Lessons based on JLPT Reading Tests: Prep Like a Pro 🎯
 
@@ -67,11 +67,13 @@ One of the standout features of Kimuchan is the dedicated practice tests for JLP
 ## Tests
 Challenge yourself with our JLPT reading tests that cover various topics of the Japanese language.
 
-## Friendship & Community
-Why learn alone when you can make friends?
-
-## User Activity
-Keep track of your learning milestones.
+### Test Results Summary:
+Average Score: Display the user's average score across all attempts.
+Average Time Taken: Show the average time taken to complete the test.
+Detailed Results:
+A list or table of individual test attempts, showing the score and time taken for each.
+Answer Review Section:
+Provide a button or link to view the answer sheet for each test attempt.
 
 ## FAQs
 

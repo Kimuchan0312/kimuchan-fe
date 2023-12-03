@@ -11,7 +11,10 @@ function NotFoundPage() {
         <Typography sx={{ color: "text.secondary", mb: "1rem" }}>
           Sorry, we couldn’t find the page you requested.
         </Typography>
-        <Button to="/" variant="contained" component={RouterLink}>
+        <Button to="/" variant="contained" component={RouterLink} sx={{
+              backgroundColor: "#ECD3D3",
+              "&:hover": { backgroundColor: "#ECD3E1" }
+            }}>
           Go to Home
         </Button>
       </Box>

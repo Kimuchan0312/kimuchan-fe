@@ -1,4 +1,9 @@
-import { Button, Checkbox, FormControlLabel, Stack, Typography } from "@mui/material";
+import {
+  Button,
+  Checkbox,
+  FormControlLabel,
+  Stack
+} from "@mui/material";
 import React from "react";
 import { useNavigate, useLocation, Link } from "react-router-dom";
 import { FormProvider, FTextField } from "../components/form";
@@ -41,16 +46,10 @@ function LoginPage() {
           minWidth: "350px",
           maxWidth: "400px",
           backgroundColor: "#FAF3E9",
-          padding: "20px",
+          padding: "30px",
           borderRadius: "10px",
         }}
       >
-        <Typography
-          variant="h4"
-          textAlign="center"
-        >
-          LOGIN
-        </Typography>
         <FTextField
           name="username"
           label="Your username or email"
@@ -88,10 +87,23 @@ function LoginPage() {
           sx={{
             backgroundColor: "#D1E3D3",
             "&:hover": { backgroundColor: "#B8D1BE" },
-            color: "#000"
+            color: "#000",
           }}
         >
           Login
+        </Button>
+        <Button
+          component={Link} 
+          to="/register" 
+          variant="contained"
+          fullWidth
+          sx={{
+            backgroundColor: "#ECD3D3", // Customize the color
+            "&:hover": { backgroundColor: "#ECD3E1" },
+            color: "#000", // Text color
+          }}
+        >
+          Sign Up
         </Button>
       </Stack>
     </FormProvider>

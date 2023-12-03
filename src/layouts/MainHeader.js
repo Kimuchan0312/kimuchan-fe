@@ -36,6 +36,10 @@ const UserMenu = ({ user, handleLogout }) => {
     navigate('/account-settings'); // Navigate to the account settings page
   };
 
+  const handleMyProfile = () => {
+    handleMenuClose(); 
+    navigate('/my-profile'); 
+  };
 
   return (
     <>
@@ -50,7 +54,7 @@ const UserMenu = ({ user, handleLogout }) => {
         open={Boolean(anchorEl)}
         onClose={handleMenuClose}
       >
-        <MenuItem onClick={handleMenuClose}>My Profile</MenuItem>
+        <MenuItem onClick={handleMyProfile}>My Profile</MenuItem>
         <MenuItem onClick={handleAccountSettings}>Account Settings</MenuItem>
         <Divider />
         <MenuItem onClick={handleLogout}>Logout</MenuItem>
@@ -105,17 +109,19 @@ function MainHeader() {
   
   const handleLogout = async () => {
     try {
-      await logout();
-      navigate("/login");
+      await logout(() => {
+        navigate("/login");
+      });
     } catch (error) {
       console.error(error);
     }
   };
+  
   const handleNavigate = (page) => {
     const route = page.toLowerCase(); // Converts 'ABOUT' to 'about'
     navigate(`/${route}`); // Navigates to the corresponding route
   };
-  
+
   return (
       <AppBar position="static" sx={{ backgroundColor: "transparent" }}>
         <Toolbar variant="dense">

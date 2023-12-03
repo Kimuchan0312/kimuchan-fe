@@ -29,7 +29,7 @@ export default function ResultModal({ userAnswers, correctAnswer, open, onClose 
         <Box sx={style}>
           {userAnswers.map((answer, index) => (
             <div key={index}>
-              <Typography variant="body1">Your answer for Question {index + 1} is: {answer}</Typography>
+              <Typography variant="body1">Your answer for the Question is: {answer}</Typography>
               <Typography variant="body1" style={{ color: typeof answer === 'string' && answer === correctAnswerString ? 'green' : 'red' }}>
                 {typeof answer === 'string' && answer === correctAnswerString ? 'Correct ✅' : 'Wrong ❌'}
               </Typography>
