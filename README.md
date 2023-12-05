@@ -2,7 +2,7 @@
 
 ## Overview
 
-Welcome to Kimuchan, your go-to web app for mastering the Japanese language.
+Welcome to Kimuchan, your website for mastering the Japanese language.
 
 ## Table of Contents
 

@@ -26,8 +26,8 @@ function Router() {
       > 
         <Route index element={<HomePage />} />
         <Route path="/about" element={<AboutPage/>} />
-        <Route path="test" element={ <AuthRequire><TestPage /></AuthRequire>} />
-        <Route path="test/:id" element={ <AuthRequire><TestDetailPage /></AuthRequire>} />
+        <Route path="/test" element={ <AuthRequire><TestPage /></AuthRequire>} />
+        <Route path="/test/:id" element={ <AuthRequire><TestDetailPage /></AuthRequire>} />
         <Route path="reading-lessons/:id" element={ <AuthRequire><DetailPage /></AuthRequire>} />
         <Route path="/result/:id" element={<AuthRequire><ReviewPage /></AuthRequire>} />
         <Route path="/account-settings" element={<AuthRequire><AccountPage /></AuthRequire>} />

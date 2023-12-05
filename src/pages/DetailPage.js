@@ -9,8 +9,8 @@ import { useParams } from "react-router-dom";
 function DetailPage() {
   const { id } = useParams();
   const [readingLesson, setReadingLesson] = useState(null);
-  const [open, setOpen] = useState(false); // React.useState is not necessary here
-  const [userAnswers, setUserAnswers] = useState([]); // Initialize as an empty array
+  const [open, setOpen] = useState(false);
+  const [userAnswers, setUserAnswers] = useState([]); 
   const [correctAnswer, setCorrectAnswer] = useState([]);
 
   useEffect(() => {

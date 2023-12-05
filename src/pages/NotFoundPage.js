@@ -13,7 +13,8 @@ function NotFoundPage() {
         </Typography>
         <Button to="/" variant="contained" component={RouterLink} sx={{
               backgroundColor: "#ECD3D3",
-              "&:hover": { backgroundColor: "#ECD3E1" }
+              "&:hover": { backgroundColor: "#ECD3E1" },
+              color: '#000'
             }}>
           Go to Home
         </Button>

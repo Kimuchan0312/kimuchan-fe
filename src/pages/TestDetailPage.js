@@ -1,10 +1,18 @@
 import React, { useState, useEffect } from "react";
-import { Box, CardContent, Chip, Typography, Grid } from "@mui/material";
+import {
+  Box,
+  CardContent,
+  Chip,
+  Typography,
+  Grid,
+  Button,
+  Alert,
+} from "@mui/material";
 import apiService from "../app/apiService";
-import { useParams } from "react-router-dom";
 import TestButtonPanel from "../components/TestButtonPanel";
-import Question from "../components/Question"; // Ensure you import Question component
+import Question from "../components/Question";
 import TestCard from "../components/TestCard";
+import { useParams } from "react-router-dom";
 
 function TestDetailPage() {
   const { id } = useParams();
@@ -12,12 +20,22 @@ function TestDetailPage() {
   const [currentLessonIndex, setCurrentLessonIndex] = useState(0);
   const [userAnswers, setUserAnswers] = useState({});
   const [showError, setShowError] = useState(false);
+  // const [correctAnswer, setCorrectAnswer] = useState([]);
 
   useEffect(() => {
     apiService
       .get(`/api/v1/tests/${id}`)
       .then((response) => {
         setTest(response.data);
+
+        // // Extract correct answers from the questions array
+        // const answers = response.data.lessons.flatMap((lesson) =>
+        //   lesson.readingLesson.questions.map(
+        //     (question) => question.correctAnswer[0]
+        //   )
+        // );
+
+        // setCorrectAnswer(answers);
       })
       .catch((error) => {
         console.error("Error fetching test:", error);
@@ -31,7 +49,7 @@ function TestDetailPage() {
   };
 
   const handleNext = () => {
-    if (currentLessonIndex < test.readingLessons.length - 1) {
+    if (currentLessonIndex < test.lessons.length - 1) {
       setCurrentLessonIndex(currentLessonIndex + 1);
     }
   };
@@ -46,7 +64,7 @@ function TestDetailPage() {
 
   const handleSubmit = () => {
     const currentLessonQuestions =
-      test.readingLessons[currentLessonIndex].questions;
+      test.lessons[currentLessonIndex].readingLesson.questions;
     const allAnswered = currentLessonQuestions.every((_, index) => {
       const key = `lesson-${currentLessonIndex}-question-${index}`;
       return userAnswers[key] !== null && userAnswers[key] !== undefined;
@@ -56,7 +74,6 @@ function TestDetailPage() {
       setShowError(true);
     } else {
       setShowError(false);
-      // Proceed with submission logic here
     }
   };
 
@@ -76,7 +93,7 @@ function TestDetailPage() {
                     backgroundColor: "#ECD3D3",
                     margin: "0.5rem",
                   }}
-                  label={`JLPT ${test.readingLessons.jlptLevel} Reading Test`}
+                  label={`JLPT Reading Test`}
                 />
                 <Typography
                   variant="body1"
@@ -84,43 +101,51 @@ function TestDetailPage() {
                   paragraph
                   sx={{ whiteSpace: "pre-wrap" }}
                 >
-                  {test.content}
+                  {test.lessons[currentLessonIndex].readingLesson.content}
                 </Typography>
               </CardContent>
             </Grid>
 
             <Grid item xs={6}>
-              {test.readingLessons.length > 0 && (
+              {test && test.readingLesson && test.readingLesson.length > 0 && (
                 <Box mb={1}>
                   <TestCard
-                    lesson={test.readingLessons[currentLessonIndex].lesson}
-                    order={test.readingLessons[currentLessonIndex].order}
+                    title={test.lessons[currentLessonIndex].readingLesson.title}
+                    order={test.lessons[currentLessonIndex].order}
+                    id={test.lessons[currentLessonIndex].id}
+                    jlptLevel={
+                      test.lessons[currentLessonIndex].readingLesson.jlptLevel
+                    }
+                    content={
+                      test.lessons[currentLessonIndex].readingLesson.content
+                    }
+                    currentLessonIndex={currentLessonIndex}
                   />
                 </Box>
               )}
             </Grid>
 
             <Grid item xs={6}>
-              {test.readingLessons[currentLessonIndex]?.questions.map(
-                (questionData, index) => (
-                  <Box key={index} mb={1}>
-                    <Question
-                      question={questionData.question}
-                      options={questionData.options}
-                      onUpdateAnswer={(selectedOption) =>
-                        handleAnswerChange(selectedOption, index)
-                      }
-                    />
-                  </Box>
-                )
-              )}
+              {test.lessons[currentLessonIndex].readingLesson.questions.map(
+                  (questionData, index) => (
+                    <Box key={index} mb={1}>
+                      <Question
+                        question={questionData.question}
+                        options={questionData.options}
+                        onUpdateAnswer={(selectedOption) =>
+                          handleAnswerChange(selectedOption, index)
+                        }
+                      />
+                    </Box>
+                  )
+                )}
               <TestButtonPanel onBack={handleBack} onNext={handleNext} />
               {showError && (
-                <div className="error-message">
+                <Alert severity="error">
                   Please answer all questions before submitting.
-                </div>
+                </Alert>
               )}
-              <button onClick={handleSubmit}>Submit</button>
+              <Button onClick={handleSubmit}>Submit</Button>
             </Grid>
           </Grid>
         </>
