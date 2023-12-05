@@ -1,41 +1,35 @@
 import React, { useState, useEffect } from "react";
-import {
-  Box,
-  CardContent,
-  Chip,
-  Typography,
-  Grid,
-  Button,
-  Alert,
-} from "@mui/material";
+import { Box, CardContent, Chip, Typography, Grid, Alert } from "@mui/material";
 import apiService from "../app/apiService";
 import TestButtonPanel from "../components/TestButtonPanel";
 import Question from "../components/Question";
-import TestCard from "../components/TestCard";
 import { useParams } from "react-router-dom";
+import ResultModal from "../components/ResultModal";
 
 function TestDetailPage() {
   const { id } = useParams();
   const [test, setTest] = useState(null);
   const [currentLessonIndex, setCurrentLessonIndex] = useState(0);
   const [userAnswers, setUserAnswers] = useState({});
+  const [userAnswersArray, setUserAnswersArray] = useState([]);
   const [showError, setShowError] = useState(false);
-  // const [correctAnswer, setCorrectAnswer] = useState([]);
+  const [correctAnswer, setCorrectAnswer] = useState([]);
+  const [open, setOpen] = useState(false);
+  const [currentLessonQuestions, setCurrentLessonQuestions] = useState([]);
 
   useEffect(() => {
     apiService
       .get(`/api/v1/tests/${id}`)
       .then((response) => {
         setTest(response.data);
+        const answers = response.data.lessons.flatMap((lesson) =>
+          lesson.readingLesson.questions.map(
+            (question) => question.correctAnswer[0]
+          )
+        );
 
-        // // Extract correct answers from the questions array
-        // const answers = response.data.lessons.flatMap((lesson) =>
-        //   lesson.readingLesson.questions.map(
-        //     (question) => question.correctAnswer[0]
-        //   )
-        // );
-
-        // setCorrectAnswer(answers);
+        setCorrectAnswer(answers);
+        setCurrentLessonQuestions(response.data.lessons[currentLessonIndex].readingLesson.questions);
       })
       .catch((error) => {
         console.error("Error fetching test:", error);
@@ -65,17 +59,28 @@ function TestDetailPage() {
   const handleSubmit = () => {
     const currentLessonQuestions =
       test.lessons[currentLessonIndex].readingLesson.questions;
+    console.log("User Answers:", userAnswers);
     const allAnswered = currentLessonQuestions.every((_, index) => {
       const key = `lesson-${currentLessonIndex}-question-${index}`;
       return userAnswers[key] !== null && userAnswers[key] !== undefined;
     });
-
+    const userAnswersArray = Object.values(userAnswers);
     if (!allAnswered) {
       setShowError(true);
     } else {
       setShowError(false);
     }
-  };
+    console.log("User Answers:", userAnswersArray);
+
+  const results = currentLessonQuestions.map((question, index) => {
+    const userAnswer = userAnswersArray[index];
+    const correctAnswer = question.correctAnswer[0];
+    const isCorrect = userAnswer === correctAnswer;
+    return { userAnswer, correctAnswer, isCorrect };
+  });
+
+  console.log("Results:", results);
+};
 
   return (
     <Box>
@@ -107,45 +112,40 @@ function TestDetailPage() {
             </Grid>
 
             <Grid item xs={6}>
-              {test && test.readingLesson && test.readingLesson.length > 0 && (
-                <Box mb={1}>
-                  <TestCard
-                    title={test.lessons[currentLessonIndex].readingLesson.title}
-                    order={test.lessons[currentLessonIndex].order}
-                    id={test.lessons[currentLessonIndex].id}
-                    jlptLevel={
-                      test.lessons[currentLessonIndex].readingLesson.jlptLevel
-                    }
-                    content={
-                      test.lessons[currentLessonIndex].readingLesson.content
-                    }
-                    currentLessonIndex={currentLessonIndex}
-                  />
-                </Box>
-              )}
-            </Grid>
-
-            <Grid item xs={6}>
               {test.lessons[currentLessonIndex].readingLesson.questions.map(
-                  (questionData, index) => (
-                    <Box key={index} mb={1}>
-                      <Question
-                        question={questionData.question}
-                        options={questionData.options}
-                        onUpdateAnswer={(selectedOption) =>
-                          handleAnswerChange(selectedOption, index)
-                        }
-                      />
-                    </Box>
-                  )
-                )}
-              <TestButtonPanel onBack={handleBack} onNext={handleNext} />
-              {showError && (
-                <Alert severity="error">
-                  Please answer all questions before submitting.
-                </Alert>
+                (questionData, index) => (
+                  <Box key={index} mb={1}>
+                    <Question
+                      question={questionData.question}
+                      options={questionData.options}
+                      onUpdateAnswer={(selectedOption) =>
+                        handleAnswerChange(selectedOption, index)
+                      }
+                    />
+                  </Box>
+                )
               )}
-              <Button onClick={handleSubmit}>Submit</Button>
+              <Grid item xs={12}>
+                <TestButtonPanel
+                  onBack={handleBack}
+                  onSubmit={handleSubmit}
+                  onNext={handleNext}
+                />
+                {showError && (
+                  <Alert severity="error">
+                    Please answer all questions before submitting.
+                  </Alert>
+                )}
+              </Grid>
+              <Grid item xs={6}>
+                <ResultModal
+                  userAnswersArray={userAnswersArray}
+                  userAnswers={userAnswers}
+                  correctAnswer={correctAnswer}
+                  open={open}
+                  onClose={() => setOpen(false)}
+                />
+              </Grid>
             </Grid>
           </Grid>
         </>

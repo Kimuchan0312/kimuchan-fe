@@ -1,15 +1,15 @@
-import { CssBaseline } from "@mui/material";
+import { CssBaseline, useMediaQuery } from "@mui/material";
 import {
   createTheme,
   ThemeProvider as MUIThemeProvider,
 } from "@mui/material/styles";
 
 const PRIMARY = {
-  lighter: "#F8F8F8", // Light gray
-  light: "#ECD3D3", // 
-  main: "#000000", // Dark gray
-  dark: "#464141", // Black
-  contrastText: "#0000", // White
+  lighter: "#F8F8F8", 
+  light: "#ECD3D3", 
+  main: "#000000", 
+  dark: "#464141", 
+  contrastText: "#0000", 
 };
 const SECONDARY = {
   lighter: "#F8F8F8", // Light gray
@@ -19,19 +19,22 @@ const SECONDARY = {
   contrastText: "#0000", // White
 };
 const SUCCESS = {
-  lighter: "#E9FCD4", // Light green
-  light: "#54D62C", // Green
-  main: "#111111", // Dark gray
-  dark: "#000000", // Black
-  contrastText: "#0000", // White
+  lighter: "#E9FCD4", 
+  light: "#54D62C", 
+  main: "#111111", 
+  dark: "#000000", 
+  contrastText: "#0000", 
 };
 
 function ThemeProvider({ children }) {
+  const prefersDarkMode = useMediaQuery("(prefers-color-scheme: dark)");
+
   const themeOptions = {
     palette: {
-      primary: PRIMARY,
-      secondary: SECONDARY,
-      success: SUCCESS,
+      primary: prefersDarkMode ? { ...PRIMARY, main: "#ffffff" } : PRIMARY,
+      secondary: prefersDarkMode ? { ...SECONDARY, main: "#ffffff" } : SECONDARY,
+      success: prefersDarkMode ? { ...SUCCESS, main: "#ffffff" } : SUCCESS,
+      mode: prefersDarkMode ? "dark" : "light",
     },
     shape: { borderRadius: 8 },
     typography: {
