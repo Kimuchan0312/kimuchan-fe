@@ -73,9 +73,11 @@ function TestDetailPage() {
       setShowError(true);
     } else {
       setShowError(false);
+      setOpen(true);
     }
-    console.log("User Answers:", userAnswersArray);
+    console.log("User Answers Array:", userAnswersArray);
   };
+  
 
   return (
     <Box>

@@ -48,7 +48,6 @@ function AccountGeneral() {
   const defaultValues = {
     name: user?.name || "",
     email: user?.email || "",
-    gender: user?.gender || "",
     avatarUrl: user?.avatarUrl || "",
     coverUrl: user?.coverUrl || "",
     phoneNumber: user?.phoneNumber || "",

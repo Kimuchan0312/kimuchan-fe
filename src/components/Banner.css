@@ -1,14 +1,11 @@
 .banner {
-  background: url('public/Banner.png') no-repeat center center;
   object-fit: cover; /* Change to "cover" for a better image fit */
-  height: 400px;
+  height: 500px;
   position: relative;
 }
 
 .banner_contents {
   margin-left: 30px;
-  padding-top: 120px;
-  height: auto; /* Remove fixed height for better responsiveness */
 }
 
 .banner_title {

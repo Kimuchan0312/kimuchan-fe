@@ -33,12 +33,12 @@ const UserMenu = ({ user, handleLogout }) => {
 
   const handleAccountSettings = () => {
     handleMenuClose(); // Close the menu
-    navigate('/account-settings'); // Navigate to the account settings page
+    navigate("/account-settings"); // Navigate to the account settings page
   };
 
   const handleMyProfile = () => {
-    handleMenuClose(); 
-    navigate('/my-profile'); 
+    handleMenuClose();
+    navigate("/my-profile");
   };
 
   return (
@@ -106,7 +106,7 @@ function MainHeader() {
   const { user, logout } = useAuth();
   const navigate = useNavigate();
   const isDesktop = useMediaQuery((theme) => theme.breakpoints.up("md"));
-  
+
   const handleLogout = async () => {
     try {
       await logout(() => {
@@ -116,20 +116,20 @@ function MainHeader() {
       console.error(error);
     }
   };
-  
+
   const handleNavigate = (page) => {
     const route = page.toLowerCase(); // Converts 'ABOUT' to 'about'
     navigate(`/${route}`); // Navigates to the corresponding route
   };
 
   return (
-      <AppBar position="static" sx={{ backgroundColor: "transparent" }}>
-        <Toolbar variant="dense">
-          <IconButton edge="start" aria-label="menu" sx={{ marginTop: 1}}>
-            <Logo />
-          </IconButton>
+    <AppBar position="static" sx={{ backgroundColor: "transparent" }}>
+      <Toolbar variant="dense">
+        <IconButton edge="start" aria-label="menu" sx={{ marginTop: 1 }}>
+          <Logo />
+        </IconButton>
 
-          <Box sx={{ marginLeft: 10, flexGrow: 2 }}>
+        <Box sx={{ marginLeft: 10, flexGrow: 2 }}>
           {isDesktop ? (
             pages.map((page) => (
               <Button key={page} onClick={() => handleNavigate(page)}>
@@ -141,13 +141,17 @@ function MainHeader() {
           )}
         </Box>
 
-          <Box sx={{ flexGrow: 1 }} />
+        <Box sx={{ flexGrow: 1 }} />
 
-          <Box>
-    <UserMenu user={user} handleLogout={handleLogout} navigate={navigate} />
-  </Box>
-        </Toolbar>
-      </AppBar>
+        <Box>
+          <UserMenu
+            user={user}
+            handleLogout={handleLogout}
+            navigate={navigate}
+          />
+        </Box>
+      </Toolbar>
+    </AppBar>
   );
 }
 
