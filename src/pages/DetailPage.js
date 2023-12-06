@@ -5,13 +5,15 @@ import apiService from "../app/apiService";
 import ButtonPanel from "../components/ButtonPanel";
 import ResultModal from "../components/ResultModal";
 import { useParams } from "react-router-dom";
+import SolutionModal from "../components/SolutionModal";
 
 function DetailPage() {
   const { id } = useParams();
   const [readingLesson, setReadingLesson] = useState(null);
   const [open, setOpen] = useState(false);
-  const [userAnswers, setUserAnswers] = useState([]); 
+  const [userAnswers, setUserAnswers] = useState([]);
   const [correctAnswer, setCorrectAnswer] = useState([]);
+  const [solutionModalOpen, setSolutionModalOpen] = useState(false);
 
   useEffect(() => {
     apiService
@@ -38,11 +40,15 @@ function DetailPage() {
     setOpen(true);
   };
 
+  const handleSolution = () => {
+    setSolutionModalOpen(true);
+  };
+
   return (
     <Box>
       {readingLesson ? (
         <>
-          <Grid container spacing={3} sx={{margin: '2rem'}}>
+          <Grid container spacing={3} sx={{ margin: "2rem" }}>
             <Grid item xs={6}>
               <CardContent sx={{ backgroundColor: "#FAF3E9" }}>
                 <Chip
@@ -52,7 +58,7 @@ function DetailPage() {
                     padding: "10px 20px",
                     border: "1px solid #000",
                     backgroundColor: "#ECD3D3",
-                    margin: '0.5rem'
+                    margin: "0.5rem",
                   }}
                   label={readingLesson.jlptLevel}
                 />
@@ -81,9 +87,8 @@ function DetailPage() {
               ))}
               <Grid item xs={12}>
                 <ButtonPanel
-                  onSubmit={() => handleOpenSubmit()}
-                  onReview={() => console.log("Review")}
-                  onSolution={() => console.log("Solution")}
+                  onSubmit={handleOpenSubmit}
+                  onSolution={handleSolution}
                 />
               </Grid>
               <Grid item xs={6}>
@@ -92,6 +97,13 @@ function DetailPage() {
                   correctAnswer={correctAnswer}
                   open={open}
                   onClose={() => setOpen(false)}
+                />
+              </Grid>
+              <Grid item xs={6}>
+                <SolutionModal
+                  open={solutionModalOpen}
+                  onClose={() => setSolutionModalOpen(false)}
+                  questions={readingLesson.questions}
                 />
               </Grid>
             </Grid>

@@ -4,7 +4,7 @@ import apiService from "../app/apiService";
 import TestButtonPanel from "../components/TestButtonPanel";
 import Question from "../components/Question";
 import { useParams } from "react-router-dom";
-import ResultModal from "../components/ResultModal";
+import TestResultModal from "../components/TestResultModal";
 
 function TestDetailPage() {
   const { id } = useParams();
@@ -16,6 +16,7 @@ function TestDetailPage() {
   const [correctAnswer, setCorrectAnswer] = useState([]);
   const [open, setOpen] = useState(false);
   const [currentLessonQuestions, setCurrentLessonQuestions] = useState([]);
+  const [totalTestQuestions, setTotalTestQuestions] = useState([]);
 
   useEffect(() => {
     apiService
@@ -29,12 +30,15 @@ function TestDetailPage() {
         );
 
         setCorrectAnswer(answers);
-        setCurrentLessonQuestions(response.data.lessons[currentLessonIndex].readingLesson.questions);
+        setTotalTestQuestions(response.data.lessons.flatMap((lesson) => lesson.readingLesson.questions));
+        setCurrentLessonQuestions(
+          response.data.lessons[currentLessonIndex].readingLesson.questions
+        );
       })
       .catch((error) => {
         console.error("Error fetching test:", error);
       });
-  }, [id]);
+  }, [currentLessonIndex, id]);
 
   const handleBack = () => {
     if (currentLessonIndex > 0) {
@@ -71,16 +75,7 @@ function TestDetailPage() {
       setShowError(false);
     }
     console.log("User Answers:", userAnswersArray);
-
-  const results = currentLessonQuestions.map((question, index) => {
-    const userAnswer = userAnswersArray[index];
-    const correctAnswer = question.correctAnswer[0];
-    const isCorrect = userAnswer === correctAnswer;
-    return { userAnswer, correctAnswer, isCorrect };
-  });
-
-  console.log("Results:", results);
-};
+  };
 
   return (
     <Box>
@@ -138,12 +133,12 @@ function TestDetailPage() {
                 )}
               </Grid>
               <Grid item xs={6}>
-                <ResultModal
+                <TestResultModal
                   userAnswersArray={userAnswersArray}
-                  userAnswers={userAnswers}
                   correctAnswer={correctAnswer}
                   open={open}
                   onClose={() => setOpen(false)}
+                  questions={totalTestQuestions}
                 />
               </Grid>
             </Grid>

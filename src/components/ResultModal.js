@@ -15,7 +15,7 @@ const style = {
   p: 4,
 };
 
-export default function ResultModal({ userAnswersArray, correctAnswer, open, onClose }) {
+export default function ResultModal({ userAnswers, correctAnswer, open, onClose }) {
 
     const correctAnswerString = Array.isArray(correctAnswer) ? String(correctAnswer[0]) : String(correctAnswer);
 
@@ -27,7 +27,7 @@ export default function ResultModal({ userAnswersArray, correctAnswer, open, onC
         aria-describedby="modal-modal-description"
       >
         <Box sx={style}>
-          {userAnswersArray.map((answer, index) => (
+          {userAnswers.map((answer, index) => (
             <div key={index}>
               <Typography variant="body1">Your answer for the Question is: {answer}</Typography>
               <Typography variant="body1" style={{ color: typeof answer === 'string' && answer === correctAnswerString ? 'green' : 'red' }}>
