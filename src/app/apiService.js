@@ -1,7 +1,7 @@
 import axios from "axios";
 
 const apiService = axios.create({
-  baseURL: "http://localhost:8000",
+  baseURL: "https://kimuchan-be-438dcfb3e46f.herokuapp.com/",
 });
 
 apiService.interceptors.request.use(

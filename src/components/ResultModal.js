@@ -2,6 +2,7 @@ import * as React from 'react';
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import Modal from '@mui/material/Modal';
+import { Paper } from '@mui/material';
 
 const style = {
   position: 'absolute',
@@ -26,7 +27,8 @@ export default function ResultModal({ userAnswers, correctAnswer, open, onClose 
         aria-labelledby="modal-modal-title"
         aria-describedby="modal-modal-description"
       >
-        <Box sx={style}>
+        <Paper style={{ backgroundColor: "#F4E9F8", ...style }}>
+        <Box sx={{ margin: 2}}>
           {userAnswers.map((answer, index) => (
             <div key={index}>
               <Typography variant="body1">Your answer for the Question is: {answer}</Typography>
@@ -36,6 +38,7 @@ export default function ResultModal({ userAnswers, correctAnswer, open, onClose 
             </div>
           ))}
         </Box>
+        </Paper>
       </Modal>
     );
   }
