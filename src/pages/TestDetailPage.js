@@ -15,9 +15,8 @@ function TestDetailPage() {
   const [showError, setShowError] = useState(false);
   const [correctAnswer, setCorrectAnswer] = useState([]);
   const [open, setOpen] = useState(false);
-  const [setCurrentLessonQuestions] = useState([]);
+  const [currentLessonQuestions, setCurrentLessonQuestions] = useState([]);
   const [totalTestQuestions, setTotalTestQuestions] = useState([]);
-  const currentLessonQuestions = test.lessons[currentLessonIndex].readingLesson.questions;
 
   useEffect(() => {
     apiService
@@ -39,7 +38,7 @@ function TestDetailPage() {
       .catch((error) => {
         console.error("Error fetching test:", error);
       });
-  }, [currentLessonIndex, setCurrentLessonQuestions,id]);
+  }, [currentLessonIndex,id]);
 
   const handleBack = () => {
     if (currentLessonIndex > 0) {
