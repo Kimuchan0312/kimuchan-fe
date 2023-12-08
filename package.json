@@ -30,8 +30,7 @@
     "react-scripts": "5.0.0",
     "react-toastify": "^8.2.0",
     "rehype-raw": "^6.1.1",
-    "yup": "^0.32.11",
-    "@babel/plugin-proposal-private-property-in-object": "^1.0.0"
+    "yup": "^0.32.11"
   },
   "scripts": {
     "start": "react-scripts start",
@@ -53,5 +52,8 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
+  },
+  "devDependencies": {
+    "@babel/plugin-proposal-private-property-in-object": "^7.21.11"
   }
 }
