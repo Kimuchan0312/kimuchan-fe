@@ -11,12 +11,13 @@ function TestDetailPage() {
   const [test, setTest] = useState(null);
   const [currentLessonIndex, setCurrentLessonIndex] = useState(0);
   const [userAnswers, setUserAnswers] = useState({});
-  const [userAnswersArray, setUserAnswersArray] = useState([]);
+  const [userAnswersArray] = useState([]);
   const [showError, setShowError] = useState(false);
   const [correctAnswer, setCorrectAnswer] = useState([]);
   const [open, setOpen] = useState(false);
-  const [currentLessonQuestions, setCurrentLessonQuestions] = useState([]);
+  const [setCurrentLessonQuestions] = useState([]);
   const [totalTestQuestions, setTotalTestQuestions] = useState([]);
+  const currentLessonQuestions = test.lessons[currentLessonIndex].readingLesson.questions;
 
   useEffect(() => {
     apiService
@@ -38,7 +39,7 @@ function TestDetailPage() {
       .catch((error) => {
         console.error("Error fetching test:", error);
       });
-  }, [currentLessonIndex, id]);
+  }, [currentLessonIndex, setCurrentLessonQuestions,id]);
 
   const handleBack = () => {
     if (currentLessonIndex > 0) {
@@ -61,9 +62,6 @@ function TestDetailPage() {
   };
 
   const handleSubmit = () => {
-    const currentLessonQuestions =
-      test.lessons[currentLessonIndex].readingLesson.questions;
-    console.log("User Answers:", userAnswers);
     const allAnswered = currentLessonQuestions.every((_, index) => {
       const key = `lesson-${currentLessonIndex}-question-${index}`;
       return userAnswers[key] !== null && userAnswers[key] !== undefined;

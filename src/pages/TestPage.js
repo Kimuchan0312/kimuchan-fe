@@ -11,7 +11,7 @@ function TestPage() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
-  const [itemsPerPage, setItemsPerPage] = useState(6);
+  const [itemsPerPage] = useState(6);
 
   const defaultValues = {
     jlptLevel: [],
