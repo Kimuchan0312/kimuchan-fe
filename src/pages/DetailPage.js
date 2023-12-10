@@ -6,6 +6,7 @@ import ButtonPanel from "../components/ButtonPanel";
 import ResultModal from "../components/ResultModal";
 import { useParams } from "react-router-dom";
 import SolutionModal from "../components/SolutionModal";
+import LoadingScreen from "../components/LoadingScreen";
 
 function DetailPage() {
   const { id } = useParams();
@@ -110,7 +111,7 @@ function DetailPage() {
           </Grid>
         </>
       ) : (
-        <Typography>Loading...</Typography>
+        <LoadingScreen></LoadingScreen>
       )}
     </Box>
   );

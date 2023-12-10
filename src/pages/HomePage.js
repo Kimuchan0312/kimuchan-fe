@@ -83,7 +83,7 @@ function HomePage() {
             <ReadingSort />
           </Stack>
         </FormProvider>
-        <Box sx={{ position: "relative", height: 1 }}>
+        <Box sx={{ position: "relative", height: 1, alignItems: "center" }}>
           {loading ? (
             <LoadingScreen />
           ) : (
@@ -99,7 +99,8 @@ function HomePage() {
         <Pagination
         count={totalPages} 
         page={currentPage} 
-        onChange={(event, page) => handlePageChange(page)} 
+        onChange={(event, page) => handlePageChange(page)}
+        sx={{ margin: "auto", mt: 2, mb: 2 }}
       />
       </Stack>
     </Container>

@@ -5,6 +5,7 @@ import TestButtonPanel from "../components/TestButtonPanel";
 import Question from "../components/Question";
 import { useParams } from "react-router-dom";
 import TestResultModal from "../components/TestResultModal";
+import LoadingScreen from "../components/LoadingScreen";
 
 function TestDetailPage() {
   const { id } = useParams();
@@ -144,7 +145,7 @@ function TestDetailPage() {
           </Grid>
         </>
       ) : (
-        <Typography>Loading...</Typography>
+        <LoadingScreen/>
       )}
     </Box>
   );
