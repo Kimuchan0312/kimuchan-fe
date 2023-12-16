@@ -16,6 +16,7 @@ import useAuth from "../hooks/useAuth";
 import { useNavigate } from "react-router-dom";
 import "../layouts/MainHeader.css";
 import { useMediaQuery } from "@mui/material";
+import { NAV } from './config-layout';
 
 const pages = ["ABOUT", "TEST", "REVIEW"];
 
@@ -123,7 +124,7 @@ function MainHeader() {
   };
 
   return (
-    <AppBar position="static" sx={{ backgroundColor: "transparent" }}>
+    <AppBar position="static" sx={{ backgroundColor: "transparent", width: `calc(100% - ${NAV.WIDTH + 1}px)`, }}>
       <Toolbar variant="dense">
         <IconButton edge="start" aria-label="menu" sx={{ marginTop: 1 }}>
           <Logo />

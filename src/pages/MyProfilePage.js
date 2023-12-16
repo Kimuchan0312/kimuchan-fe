@@ -14,9 +14,6 @@ const JlptTestResults = ({ lesson }) => {
           <p>Test Date: {result.date}</p>
           <p>Score: {result.score}</p>
           <p>Time Taken: {result.time}</p>
-          <button onClick={() => {console.log('View answer sheet')}}>
-            View Answer Sheet
-          </button>
         </div>
       ))}
     </Card>
@@ -40,7 +37,6 @@ const MyProfilePage = () => {
   const lesson = {
     score: 75,
     time: 50,
-    // Assuming testResults is an array of test results
     testResults: [
       { date: '2023-01-01', score: 80, time: 45 },
       { date: '2023-01-05', score: 70, time: 55 },

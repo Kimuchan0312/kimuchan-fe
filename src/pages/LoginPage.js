@@ -17,6 +17,7 @@ const LoginSchema = Yup.object().shape({
 });
 const defaultValues = {
   username: "",
+  password: ""
 };
 
 function LoginPage() {

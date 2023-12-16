@@ -19,7 +19,6 @@ function HomePage() {
   const [currentPage, setCurrentPage] = useState(1);
   const [itemsPerPage] = useState(6); 
 
-
   const defaultValues = {
     jlptLevel: [],
     sortBy: "featured",
@@ -34,26 +33,32 @@ function HomePage() {
   const filterReadingLessons = applyFilter(readingLessons, filters, currentPage, itemsPerPage);
 
   useEffect(() => {
+    let isMounted = true; // A flag to track whether the component is mounted
+  
     const fetchReadingLesson = async () => {
-
       try {
-        const response = await apiService.get('/api/v1/reading-lessons'); 
-        if (response.data) {
+        const response = await apiService.get('/api/v1/reading-lessons');
+        
+        if (isMounted) {
+          // Check if the component is still mounted before updating state
           setReadingLessons(response.data);
-          setLoading(false);
-        } else {
-          setError('No reading lessons found.');
           setLoading(false);
         }
       } catch (error) {
-        setError('Failed to fetch reading lessons.');
-        setLoading(false);
+        if (isMounted) {
+          setError('Failed to fetch reading lessons.');
+          setLoading(false);
+        }
       }
     };
-
+  
     fetchReadingLesson();
+  
+    return () => {
+      isMounted = false;
+    };
   }, []);
-
+  
   function handlePageChange(newPage) {
     setCurrentPage(newPage);
   }
