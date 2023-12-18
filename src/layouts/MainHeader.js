@@ -85,14 +85,6 @@ function MainHeader() {
     }
   }, [logout, navigate]);
 
-  const handlePassword = useCallback(() => {
-    try {
-      navigate("/changePassword");
-    } catch (error) {
-      console.error(error);
-    }
-  }, [navigate]);
-
   const handleAdminControl = useCallback(() => {
     try {
       navigate("admin/controlpanel");
@@ -171,7 +163,6 @@ function MainHeader() {
     isAuthenticated,
     user,
     handleMyProfile,
-    handlePassword,
     handleAdminControl,
     handleAccountSettings,
     handleCreateNewReadingLesson,
