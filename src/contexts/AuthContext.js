@@ -1,14 +1,14 @@
 import { createContext, useReducer, useEffect } from "react";
-import { useSelector } from "react-redux";
 import apiService from "../app/apiService";
 import { isValidToken } from "../utils/jwt";
+import { toast } from "react-toastify";
+import { useSelector } from "react-redux";
 
 const initialState = {
-  isInitialized: false,
+  isInitialState: false,
   isAuthenticated: false,
-  user: { id: null },
+  user: null,
 };
-
 
 const INITIALIZE = "AUTH.INITIALIZE";
 const LOGIN_SUCCESS = "AUTH.LOGIN_SUCCESS";
@@ -32,49 +32,30 @@ const reducer = (state, action) => {
         isAuthenticated: true,
         user: action.payload.user,
       };
+
     case REGISTER_SUCCESS:
       return {
         ...state,
         isAuthenticated: true,
         user: action.payload.user,
       };
+
     case LOGOUT:
       return {
         ...state,
         isAuthenticated: false,
         user: null,
       };
+
     case UPDATE_PROFILE:
-      const {
-        name,
-        avatarUrl,
-        coverUrl,
-        aboutMe,
-        city,
-        country,
-        company,
-        facebookLink,
-        instagramLink,
-        linkedinLink,
-        twitterLink
-      } = action.payload;
+      const { name, phoneNumber, email, aboutMe, role } = action.payload;
+
       return {
         ...state,
-        user: {
-          ...state.user,
-          name,
-          avatarUrl,
-          coverUrl,
-          aboutMe,
-          city,
-          country,
-          company,
-          facebookLink,
-          instagramLink,
-          linkedinLink,
-          twitterLink
-        },
+        user: { ...state.user, name, phoneNumber, email, aboutMe, role },
+        isAuthenticated: true,
       };
+
     default:
       return state;
   }
@@ -94,7 +75,7 @@ const AuthContext = createContext({ ...initialState });
 
 function AuthProvider({ children }) {
   const [state, dispatch] = useReducer(reducer, initialState);
-  const updatedProfile = useSelector((state) => state.user.updatedProfile);
+  const updatedProfile = useSelector((state) => state?.user?.updatedProfile);
 
   useEffect(() => {
     const initialize = async () => {
@@ -103,7 +84,7 @@ function AuthProvider({ children }) {
 
         if (accessToken && isValidToken(accessToken)) {
           setSession(accessToken);
-          const response = await apiService.get("/me");
+          const response = await apiService.get("api/v1/users/me");
           const user = response.data.data;
 
           dispatch({
@@ -137,7 +118,6 @@ function AuthProvider({ children }) {
     };
     initialize();
   }, []);
-  
 
   useEffect(() => {
     if (updatedProfile)
@@ -145,38 +125,44 @@ function AuthProvider({ children }) {
   }, [updatedProfile]);
 
   const login = async ({ email, password }, callback) => {
-    const response = await apiService.post("/api/v1/auth/login", { email, password });
-    const { user, accessToken } = response.data;
+    const response = await apiService.post("/api/v1/auth/login", {
+      email,
+      password,
+    });
+    const { user, accessToken } = response.data.data;
 
     setSession(accessToken);
     dispatch({
       type: LOGIN_SUCCESS,
-      payload: { user },
+      payload: { user, accessToken },
     });
-
+    toast.success("Login success");
     callback();
   };
 
-  const register = async ({ name, email, password }, callback) => {
-    const response = await apiService.post("/users", {
+  const register = async ({ name, phoneNumber, email, password }, callback) => {
+    const response = await apiService.post("/api/v1/users", {
       name,
       email,
+      phoneNumber,
       password,
     });
 
-    const { user, accessToken } = response.data;
+    const { user, accessToken } = response.data.data;
+
     setSession(accessToken);
     dispatch({
       type: REGISTER_SUCCESS,
-      payload: { user },
+      payload: { user, accessToken },
     });
-
+    toast.success("Create new Account success");
     callback();
   };
 
-  const logout = async (callback) => {
+  const logout = (callback) => {
     setSession(null);
     dispatch({ type: LOGOUT });
+    toast.success("Logout success");
     callback();
   };
 

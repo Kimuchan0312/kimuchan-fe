@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from "react";
 import { Box, CardContent, Chip, Typography, Grid, Alert } from "@mui/material";
 import apiService from "../app/apiService";
-import TestButtonPanel from "../components/TestButtonPanel";
-import Question from "../components/Question";
+import TestButtonPanel from "../features/tests/TestButtonPanel";
+import Question from "../features/lessons/Question";
 import { useParams } from "react-router-dom";
-import TestResultModal from "../components/TestResultModal";
+import TestResultModal from "../features/tests/TestResultModal";
 import LoadingScreen from "../components/LoadingScreen";
 
 function TestDetailPage() {

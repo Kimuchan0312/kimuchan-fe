@@ -13,7 +13,7 @@ const PRIMARY = {
 };
 const SECONDARY = {
   lighter: "#F8F8F8", // Light gray
-  light: "#3366FF", // Blue
+  light: "#ECD3D3", // Blue
   main: "#464141", // Dark gray
   dark: "#000000", // Black
   contrastText: "#0000", // White

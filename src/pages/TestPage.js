@@ -2,8 +2,8 @@ import React, { useState, useEffect } from "react";
 import { Container, Stack, Pagination, Alert, Box } from "@mui/material";
 import { FormProvider, useForm } from "react-hook-form";
 import LoadingScreen from "../components/LoadingScreen";
-import TestFilter from "../components/TestFilter";
-import TestList from "../components/TestList";
+import TestFilter from "../features/tests/TestFilter";
+import TestList from "../features/tests/TestList";
 import apiService from "../app/apiService";
 
 function TestPage() {

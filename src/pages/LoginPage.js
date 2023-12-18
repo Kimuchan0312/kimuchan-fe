@@ -2,43 +2,58 @@ import {
   Button,
   Checkbox,
   FormControlLabel,
-  Stack
+  IconButton,
+  InputAdornment,
+  Stack,
 } from "@mui/material";
-import React from "react";
-import { useNavigate, useLocation, Link } from "react-router-dom";
+import React, { useState } from "react";
+import { useNavigate, Link as RouterLink } from "react-router-dom";
 import { FormProvider, FTextField } from "../components/form";
 import useAuth from "../hooks/useAuth";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as Yup from "yup";
+import { Link } from "react-router-dom";
+import { Visibility, VisibilityOff } from "@mui/icons-material";
 
 const LoginSchema = Yup.object().shape({
-  username: Yup.string().required("Username is required"),
+  email: Yup.string().email("Invalid email").required("Email is required"),
+  password: Yup.string().required("Password is required"),
 });
 const defaultValues = {
-  username: "",
-  password: ""
+  email: "",
+  password: "",
 };
 
 function LoginPage() {
   let navigate = useNavigate();
-  let location = useLocation();
   let auth = useAuth();
+  const [showPassword, setShowPassword] = useState(false);
 
   const methods = useForm({
     resolver: yupResolver(LoginSchema),
     defaultValues,
   });
-  const { handleSubmit } = methods;
+  const {
+    handleSubmit,
+    reset,
+    setError
+  } = methods;
 
   const onSubmit = async (data) => {
-    let from = location.state?.from?.pathname || "/";
-    let username = data.username;
+    let { email, password } = data;
 
-    auth.login(username, () => {
-      navigate(from, { replace: true });
-    });
+    try {
+      await auth.login({ email, password }, () => {
+        navigate("/", { replace: true });
+      });
+    } catch (error) {
+      reset();
+      setError("responseError", error);
+    }
   };
+
+
   return (
     <FormProvider methods={methods} onSubmit={handleSubmit(onSubmit)}>
       <Stack
@@ -52,7 +67,7 @@ function LoginPage() {
         }}
       >
         <FTextField
-          name="username"
+          name="email"
           label="Your username or email"
           fullWidth
           variant="outlined"
@@ -61,10 +76,28 @@ function LoginPage() {
         <FTextField
           name="password"
           label="Your password"
-          type="password"
           fullWidth
           variant="outlined"
           sx={{ marginBottom: "15px" }}
+          type={showPassword ? "text" : "password"}
+          InputProps={{
+            endAdornment: (
+              <InputAdornment position="end">
+                <IconButton
+                  aria-label="toggle password visibility"
+                  onClick={() => setShowPassword(!showPassword)}
+                  onMouseDown={(e) => e.preventDefault()}
+                  edge="end"
+                >
+                  {showPassword ? (
+                    <Visibility color="info" />
+                  ) : (
+                    <VisibilityOff color="info" />
+                  )}
+                </IconButton>
+              </InputAdornment>
+            ),
+          }}
         />
 
         <FormControlLabel
@@ -82,7 +115,6 @@ function LoginPage() {
         </Link>
 
         <Button
-          type="submit"
           variant="contained"
           fullWidth
           sx={{
@@ -90,12 +122,13 @@ function LoginPage() {
             "&:hover": { backgroundColor: "#B8D1BE" },
             color: "#000",
           }}
+          type="submit"
         >
           Login
         </Button>
         <Button
-          component={Link} 
-          to="/register" 
+          component={RouterLink}
+          to="/register"
           variant="contained"
           fullWidth
           sx={{

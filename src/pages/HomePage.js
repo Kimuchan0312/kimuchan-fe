@@ -5,10 +5,10 @@ import { useForm } from "react-hook-form";
 import apiService from "../app/apiService";
 import orderBy from "lodash/orderBy";
 import LoadingScreen from "../components/LoadingScreen";
-import ReadingFilter from "../components/ReadingFilter";
-import ReadingSearch from "../components/ReadingSearch";
-import ReadingSort from "../components/ReadingSort";
-import ReadingList from "../components/ReadingList";
+import ReadingFilter from "../features/lessons/ReadingFilter";
+import ReadingSearch from "../features/lessons/ReadingSearch";
+import ReadingSort from "../features//lessons/ReadingSort";
+import ReadingList from "../features/lessons/ReadingList";
 import Banner from "../components/Banner";
 
 
@@ -58,7 +58,7 @@ function HomePage() {
       isMounted = false;
     };
   }, []);
-  
+
   function handlePageChange(newPage) {
     setCurrentPage(newPage);
   }

@@ -1,11 +1,11 @@
 import React, { useState, useEffect } from "react";
 import { Box, CardContent, Chip, Typography, Grid } from "@mui/material";
-import Question from "../components/Question";
+import Question from "../features/lessons/Question";
 import apiService from "../app/apiService";
 import ButtonPanel from "../components/ButtonPanel";
-import ResultModal from "../components/ResultModal";
+import ResultModal from "../features/lessons/ResultModal";
 import { useParams } from "react-router-dom";
-import SolutionModal from "../components/SolutionModal";
+import SolutionModal from "../features/lessons/SolutionModal";
 import LoadingScreen from "../components/LoadingScreen";
 
 function DetailPage() {

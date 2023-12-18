@@ -1,16 +1,21 @@
 import { Box, Button, Stack, Typography } from "@mui/material";
-import { FMultiCheckbox } from "./form";
+import { FMultiCheckbox } from "../../components/form";
 import ClearAllIcon from "@mui/icons-material/ClearAll";
+
+export const SORT_BY_OPTIONS = [
+  { value: "featured", label: "Featured" },
+  { value: "newest", label: "Newest" },
+];
 
 export const FILTER_LEVEL_OPTIONS = ["N1", "N2", "N3", "N4", "N5"];
 
-function TestFilter({ resetFilter }) {
+function ReadingFilter({ resetFilter }) {
 
   return (
     <Stack spacing={3} sx={{ p: 3, width: 250 }}>
       <Stack spacing={1}>
         <Typography variant="h6" sx={{ fontWeight: 600 }}>
-          Test Level
+          Level
         </Typography>
         <FMultiCheckbox
           name="jlptLevel"
@@ -35,4 +40,4 @@ function TestFilter({ resetFilter }) {
   );
 }
 
-export default TestFilter;
+export default ReadingFilter;
