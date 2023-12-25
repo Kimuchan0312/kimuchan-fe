@@ -3,6 +3,7 @@ import apiService from "../app/apiService";
 import { isValidToken } from "../utils/jwt";
 import { toast } from "react-toastify";
 import { useSelector } from "react-redux";
+import jwtDecode from "jwt-decode";
 
 const initialState = {
   isInitialState: false,
@@ -79,33 +80,25 @@ function AuthProvider({ children }) {
 
   useEffect(() => {
     const initialize = async () => {
-      try {
-        const accessToken = window.localStorage.getItem("accessToken");
+      const accessToken = window.localStorage.getItem("accessToken");
 
-        if (accessToken && isValidToken(accessToken)) {
-          setSession(accessToken);
-          const response = await apiService.get("api/v1/users/me");
-          const user = response.data.data;
+      // Check if token exists and is valid
+      if (isValidToken(accessToken)) {
+        setSession(accessToken);
+        
+        // Optionally decode token to get user data
+        const decoded = jwtDecode(accessToken);
+      const user = decoded ? { userId: decoded.userId } : null;
 
-          dispatch({
-            type: INITIALIZE,
-            payload: {
-              isAuthenticated: true,
-              user,
-              accessToken,
-            },
-          });
-        } else {
-          setSession(null);
-          dispatch({
-            type: INITIALIZE,
-            payload: {
-              isAuthenticated: false,
-              user: null,
-            },
-          });
-        }
-      } catch (error) {
+        dispatch({
+          type: INITIALIZE,
+          payload: {
+            isAuthenticated: true,
+            user,
+          },
+        });
+      } else {
+        // Handle case when there is no token or token is invalid
         setSession(null);
         dispatch({
           type: INITIALIZE,
@@ -116,6 +109,7 @@ function AuthProvider({ children }) {
         });
       }
     };
+
     initialize();
   }, []);
 

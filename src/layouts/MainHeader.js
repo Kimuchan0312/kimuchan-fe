@@ -114,7 +114,7 @@ function MainHeader() {
 
   const handleCreateNewReadingLesson = useCallback(() => {
     try {
-      navigate("/createNewReadingLesson");
+      navigate("/create-new");
       handleCloseUserMenu();
     } catch (error) {
       console.error(error);

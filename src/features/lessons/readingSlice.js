@@ -1,6 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
 import apiService from "../../app/apiService";
-import { NUMBER_READING_OF_LIMIT } from "../../app/config";
 import { toast } from "react-toastify";
 
 const initialState = {
@@ -106,7 +105,7 @@ export const updateSingleReadingLesson =
 
     try {
       const response = await apiService.put(
-        `/reading-lessons/${lessonId}`,
+        `/api/v1/reading-lessons/${lessonId}`,
         data
       );
       dispatch(slice.actions.updateSingleReadingLessonSuccess(response.data));
@@ -119,7 +118,7 @@ export const updateSingleReadingLesson =
   };
 
 export const getAllReadingLessons =
-  ({ page, limit = NUMBER_READING_OF_LIMIT }) =>
+  ({ page, limit = '10' }) =>
   async (dispatch) => {
     dispatch(startLoading());
     try {

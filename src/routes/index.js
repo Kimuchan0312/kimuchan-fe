@@ -18,6 +18,7 @@ import AdminControlPanel from "../features/user/AdminControlPanel";
 import UpdateReadingLessonsByAdmin from "../features/lessons/UpdateReadingLessonsByAdmin";
 import UpdateUserByAdmin from "../features/user/UpdateUserByAdmin";
 import UserChangePassword from "../features/user/UserChangePassword";
+import ReadingCreate from "../features/lessons/ReadingCreate";
 
 function Router() {
   return (
@@ -98,6 +99,15 @@ function Router() {
           }
         />
       </Route>
+
+      <Route
+          path="/create-new"
+          element={
+            <AuthRequire>
+              <ReadingCreate />
+            </AuthRequire>
+          }
+        />
 
       <Route element={<BlankLayout />}>
       <Route

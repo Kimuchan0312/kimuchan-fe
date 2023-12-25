@@ -1,9 +1,7 @@
 import React, { useState } from "react";
 import { Container, Tab, Box, Tabs } from "@mui/material";
 import AccountBoxIcon from "@mui/icons-material/AccountBox";
-import ShareIcon from "@mui/icons-material/Share";
 import AccountGeneral from "../features/user/AccountGeneral";
-import AccountSocialLinks from "../features/user/AccountSocialLinks";
 import { capitalCase } from "change-case";
 
 function AccountPage() {
@@ -14,12 +12,7 @@ function AccountPage() {
       value: "general",
       icon: <AccountBoxIcon sx={{ fontSize: 30 }} />,
       component: <AccountGeneral />,
-    },
-    {
-      value: "social_links",
-      icon: <ShareIcon sx={{ fontSize: 30 }} />,
-      component: <AccountSocialLinks profile={{}} />,
-    },
+    }
   ];
 
   return (
