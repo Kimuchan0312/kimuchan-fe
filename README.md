@@ -2,7 +2,7 @@
 
 ## Overview
 
-Welcome to Kimuchan, your website for mastering the Japanese language.
+Kimuchan is your go-to web app for mastering the Japanese language from vocabulary to reading tests.  One of the standout features of Kimuchan is the dedicated practice tests for JLPT (Japanese Language Proficiency Test) levels. The web app should provide an intuitive and seamless user experience, ensuring that learners can easily find and practice the tests they want. It should also allow the admin to create and manage the reading lessons and tests.
 
 ## Table of Contents
 
@@ -82,6 +82,9 @@ Provide a button or link to view the answer sheet for each test attempt.
 
 - **Can I practice for the JLPT exams?**
   - Absolutely! Our JLPT Reading Tests feature offers a free and realistic practice environment to help you prepare effectively for your exams.
+ 
+## Core UX Flow
+<a href="https://www.figma.com/proto/hoy4H8g3ja8Z3VeZ7Ifynf/Japanese-learning-website?type=design&node-id=3-2&t=sf95baoR34Tp2cxv-1&scaling=scale-down&page-id=0%3A1&starting-point-node-id=3%3A2&mode=design">Prototype</a>
 
 ## License
 MIT License. Freely use the code, but attribution is appreciated.
